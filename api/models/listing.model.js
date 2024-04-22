@@ -10,8 +10,8 @@ const listingSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    address: {
-      type: String,
+    ingredients: {
+      type: [String],
       required: true,
     },
     regularPrice: {
@@ -22,20 +22,8 @@ const listingSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    bathrooms: {
+    quantity: {
       type: Number,
-      required: true,
-    },
-    bedrooms: {
-      type: Number,
-      required: true,
-    },
-    furnished: {
-      type: Boolean,
-      required: true,
-    },
-    parking: {
-      type: Boolean,
       required: true,
     },
     type: {

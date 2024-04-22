@@ -18,10 +18,9 @@ export default function CreateListing() {
     imageUrls: [],
     name: '',
     description: '',
-    address: '',
-    type: 'rent',
-    bedrooms: 1,
-    bathrooms: 1,
+    ingredients: '',
+    type: 'Agroalimentaire',
+    quantity: 1,
     regularPrice: 50,
     discountPrice: 0,
     offer: false,
@@ -93,14 +92,14 @@ export default function CreateListing() {
     })
   }
   const handleChange = (e) => {
-    if (e.target.id === 'sale' || e.target.id === 'rent'){
+    if (e.target.id === 'Agroalimentaire' || e.target.id === 'Beaute' || e.target.id === 'Artisanat'){
       setFormData({
         ...formData,
         type: e.target.id
       })
     }
 
-    if(e.target.id === 'parking' || e.target.id === 'furnished' || e.target.id === 'offer'){
+    if(e.target.id ===  'offer'){  //'parking' || e.target.id === 'furnished' || e.target.id ===
       setFormData({
         ...formData,
         [e.target.id]: e.target.checked
@@ -176,29 +175,25 @@ const handleSubmit = async (e) => {
           />
           <input
             type='text'
-            placeholder='Address'
+            placeholder='ingredients'
             className='border p-3 rounded-lg'
-            id='address'
+            id='ingredients'
             required
             onChange={handleChange}
-            value={formData.address}
+            value={formData.ingredients}
           />
           <div className='flex gap-6 flex-wrap'>
             <div className='flex gap-2'>
-              <input type='checkbox' id='sale' className='w-5' onChange={handleChange} checked={formData.type === 'sale'} />
-              <span>Sell</span>
+              <input type='checkbox' id='Agroalimentaire' className='w-5' onChange={handleChange} checked={formData.type === 'Agroalimentaire'} />
+              <span>Agroalimentaire</span>
             </div>
             <div className='flex gap-2'>
-              <input type='checkbox' id='rent' className='w-5' onChange={handleChange} checked={formData.type === 'rent'} />
-              <span>Rent</span>
+              <input type='checkbox' id='Beaute' className='w-5' onChange={handleChange} checked={formData.type === 'Beaute'} />
+              <span>Beaute</span>
             </div>
             <div className='flex gap-2'>
-              <input type='checkbox' id='parking' className='w-5' onChange={handleChange} checked={formData.parking} />
-              <span>Parking spot</span>
-            </div>
-            <div className='flex gap-2'>
-              <input type='checkbox' id='furnished' className='w-5' onChange={handleChange} checked={formData.furnished} />
-              <span>Furnished</span>
+              <input type='checkbox' id='Artisanat' className='w-5' onChange={handleChange} checked={formData.type === 'Artisanat'} />
+              <span>Artisanat</span>
             </div>
             <div className='flex gap-2'>
               <input type='checkbox' id='offer' className='w-5' onChange={handleChange} checked={formData.offer} />
@@ -206,31 +201,18 @@ const handleSubmit = async (e) => {
             </div>
           </div>
           <div className='flex flex-wrap gap-6'>
-            <div className='flex items-center gap-2'>
+          <div className='flex items-center gap-2'>
               <input
                 type='number'
-                id='bedrooms'
+                id='quantity'
                 min='1'
                 max='10'
                 required
                 className='p-3 border border-gray-300 rounded-lg'
                 onChange={handleChange}
-                value={formData.bedrooms}
+                value={formData.quantity}
               />
-              <p>Beds</p>
-            </div>
-            <div className='flex items-center gap-2'>
-              <input
-                type='number'
-                id='bathrooms'
-                min='1'
-                max='10'
-                required
-                className='p-3 border border-gray-300 rounded-lg'
-                onChange={handleChange}
-                value={formData.bathrooms}
-              />
-              <p>Baths</p>
+              <p>quantity</p>
             </div>
             <div className='flex items-center gap-2'>
               <input
@@ -245,7 +227,7 @@ const handleSubmit = async (e) => {
               />
               <div className='flex flex-col items-center'>
                 <p>Regular price</p>
-                <span className='text-xs'>($ / month)</span>
+                <span className='text-xs'>(MAD)</span>
               </div>
             </div>
             {formData.offer && (
@@ -262,7 +244,7 @@ const handleSubmit = async (e) => {
               />
               <div className='flex flex-col items-center'>
                 <p>Discounted price</p>
-                <span className='text-xs'>($ / month)</span>
+                <span className='text-xs'>(MAD)</span>
               </div>
             </div>
             

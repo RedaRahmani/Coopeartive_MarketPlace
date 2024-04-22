@@ -6,9 +6,7 @@ const Search = () => {
     const navigate = useNavigate();
     const [sidebardata, setSidebardata] = useState({
         searchTerm: '',
-        type: 'all',
-        parking: false,
-        furnished: false,
+        type: 'Agroalimentaire',
         offer: false,
         sort: 'created_at',
         order: 'desc',
@@ -22,25 +20,19 @@ const Search = () => {
         const urlParams = new URLSearchParams(location.search);
         const searchTermFromUrl = urlParams.get('searchTerm');
         const typeFromUrl = urlParams.get('type');
-        const parkingFromUrl = urlParams.get('parking');
-        const furnishedFromUrl = urlParams.get('furnished');
         const offerFromUrl = urlParams.get('offer');
         const sortFromUrl = urlParams.get('sort');
         const orderFromUrl = urlParams.get('order');
 
         if(searchTermFromUrl ||
             typeFromUrl ||
-            parkingFromUrl ||
-            furnishedFromUrl ||
             offerFromUrl ||
             sortFromUrl ||
             orderFromUrl
         ){
             setSidebardata({
                 searchTerm: searchTermFromUrl || '',
-                type: typeFromUrl ||'all',
-                parking: parkingFromUrl === 'true' ? true : false,
-                furnished: furnishedFromUrl === 'true' ? true : false,
+                type: typeFromUrl ||'Agroalimentaire',
                 offer : offerFromUrl === 'true' ? true : false,
                 sort: sortFromUrl || 'created_at',
                 order: orderFromUrl || 'desc',
@@ -57,13 +49,13 @@ const Search = () => {
         fetchListings();
     },[location.search]);
     const handleChange = (e) =>{
-        if(e.target.id === 'all' || e.target.id === 'rent' || e.target.id === 'sale'){
+        if(e.target.id === 'all' || e.target.id === 'Beaute' || e.target.id === 'Artisanat', e.target.id ===  'Agroalimentaire'){
             setSidebardata({...sidebardata, type: e.target.id});
         }
         if(e.target.id === 'searchTerm'){
             setSidebardata({...sidebardata, searchTerm: e.target.value});
         }
-        if(e.target.id === 'parking' || e.target.id === 'furnished' || e.target.id === 'offer'){
+        if(e.target.id ==='offer'){
             setSidebardata({...sidebardata, [e.target.id]: e.target.checked || e.target.checked === 'true' ? true : false});
         }
         if (e.target.id === 'sort_order'){
@@ -77,8 +69,6 @@ const Search = () => {
         const urlParams = new URLSearchParams()
         urlParams.set('searchTerm', sidebardata.searchTerm)
         urlParams.set('type', sidebardata.type)
-        urlParams.set('parking', sidebardata.parking)
-        urlParams.set('furnished', sidebardata.furnished)
         urlParams.set('offer', sidebardata.offer)
         urlParams.set('sort', sidebardata.sort)
         urlParams.set('order', sidebardata.order)
@@ -101,54 +91,47 @@ const Search = () => {
                 </div>
                 <div className='flex gap-2 flex-wrap'>
                     <label className='font-semibold'>Type:</label>
-                    <div className='flex gap-2'>
+                    {/* <div className='flex gap-2'>
                         <input type='checkbox' id='all' className='w-5' 
                         onChange={handleChange}
                         checked={sidebardata.type === 'all'}
                         />
-                        <span>Rent & sale</span>
+                        <span>Beaute & Artisanat & Agroalimentaire </span>
+                    </div> */}
+                    <div className='flex gap-2'>
+                        <input type='checkbox' id='Agroalimentaire' className='w-5' 
+                        onChange={handleChange}
+                        checked={sidebardata.type === 'Agroalimentaire'}
+                        />
+                        <span>Agroalimentaire</span>
                     </div>
                     <div className='flex gap-2'>
-                        <input type='checkbox' id='rent' className='w-5' 
+                        <input type='checkbox' id='Beaute' className='w-5' 
                         onChange={handleChange}
-                        checked={sidebardata.type === 'rent'}
+                        checked={sidebardata.type === 'Beaute'}
                         />
-                        <span>Rent</span>
+                        <span>Beaute</span>
                     </div>
                     <div className='flex gap-2'>
-                        <input type='checkbox' id='sale' className='w-5' 
+                        <input type='checkbox' id='Artisanat' className='w-5' 
                         onChange={handleChange}
-                        checked={sidebardata.type === 'sale'}
+                        checked={sidebardata.type === 'Artisanat'}
                         />
-                        <span>sale</span>
+                        <span>Artisanat</span>
                     </div>
+                    <div className='flex gap-2'>
+                        <input type='checkbox' id='all' className='w-5' />
+                        <span>Beaute & Artisanat & Agroalimentaire</span>
+                    </div>
+                </div>
+                <div className='flex gap-2 flex-wrap'>
+                    <label className='font-semibold'>Amenities:</label>
                     <div className='flex gap-2'>
                         <input type='checkbox' id='offer' className='w-5' 
                         onChange={handleChange}
                         checked={sidebardata.offer}
                         />
                         <span>offer</span>
-                    </div>
-                    <div className='flex gap-2'>
-                        <input type='checkbox' id='all' className='w-5' />
-                        <span>Rent & sale</span>
-                    </div>
-                </div>
-                <div className='flex gap-2 flex-wrap'>
-                    <label className='font-semibold'>Amenities:</label>
-                    <div className='flex gap-2'>
-                        <input type='checkbox' id='all' className='w-5' 
-                        onChange={handleChange}
-                        checked={sidebardata.parking}
-                        />
-                        <span>parking</span>
-                    </div>
-                    <div className='flex gap-2'>
-                        <input type='checkbox' id='rent' className='w-5' 
-                        onChange={handleChange}
-                        checked={sidebardata.furnished}
-                        />
-                        <span>furnished</span>
                     </div>
                 </div>
                 <div className='flex items-center gap-2'>
