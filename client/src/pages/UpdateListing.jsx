@@ -24,8 +24,6 @@ export default function CreateListing() {
     regularPrice: 50,
     discountPrice: 0,
     offer: false,
-    parking: false,
-    furnished: false,
   });
   const [imageUploadError, setImageUploadError] = useState(false);
   const [uploading, setUploading] = useState(false);
@@ -99,7 +97,7 @@ export default function CreateListing() {
       })
     }
 
-    if(e.target.id ===  'offer'){  //'parking' || e.target.id === 'furnished' || e.target.id ===
+    if(e.target.id ===  'offer'){  
       setFormData({
         ...formData,
         [e.target.id]: e.target.checked

@@ -4,14 +4,12 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore from 'swiper';
 import { useSelector } from 'react-redux';
 import { Navigation } from 'swiper/modules';
+import { MdProductionQuantityLimits } from "react-icons/md";
+import { BiCategoryAlt } from "react-icons/bi";
+
+
 import 'swiper/css/bundle';
 import {
-  FaBath,
-  FaBed,
-  FaChair,
-  FaMapMarkedAlt,
-  FaMapMarkerAlt,
-  FaParking,
   FaShare,
 } from 'react-icons/fa';
 import Contact from '../components/Contact';
@@ -95,15 +93,17 @@ export default function Listing() {
               {listing.offer
                 ? listing.discountPrice.toLocaleString('en-US')
                 : listing.regularPrice.toLocaleString('en-US')}
-              {listing.type === 'rent' && ' / month'}
+              {listing.type === 'Agroalimentaire'}
             </p>
             <p className='flex items-center mt-6 gap-2 text-slate-600  text-sm'>
-              <FaMapMarkerAlt className='text-green-700' />
+              <BiCategoryAlt className='text-green-700' />
               {listing.ingredients}
             </p>
             <div className='flex gap-4'>
               <p className='bg-red-900 w-full max-w-[200px] text-white text-center p-1 rounded-md'>
-                {listing.type === 'rent' ? 'For Rent' : 'For Sale'}
+                {listing.type === 'Agroalimentaire' ? 'Agroalimentaire' : ''}
+                {listing.type === 'Beaute' ? 'Beaute' : ''}
+                {listing.type === 'Artisanat' ? 'Artisanat' : ''}
               </p>
               {listing.offer && (
                 <p className='bg-green-900 w-full max-w-[200px] text-white text-center p-1 rounded-md'>
@@ -117,18 +117,10 @@ export default function Listing() {
             </p>
             <ul className='text-green-900 font-semibold text-sm flex flex-wrap items-center gap-4 sm:gap-6'>
               <li className='flex items-center gap-1 whitespace-nowrap '>
-                <FaBath className='text-lg' />
+                <MdProductionQuantityLimits className='text-lg' />
                 {listing.quantity > 1
-                  ? `${listing.quantity} baths `
-                  : `${listing.quantity} bath `}
-              </li>
-              <li className='flex items-center gap-1 whitespace-nowrap '>
-                <FaParking className='text-lg' />
-                {listing.parking ? 'Parking spot' : 'No Parking'}
-              </li>
-              <li className='flex items-center gap-1 whitespace-nowrap '>
-                <FaChair className='text-lg' />
-                {listing.furnished ? 'Furnished' : 'Unfurnished'}
+                  ? `${listing.quantity} Each `
+                  : `${listing.quantity} Quantities `}
               </li>
             </ul>
             {currentUser && listing.userRef !== currentUser._id && !contact && (

@@ -71,17 +71,6 @@ export const getListings = async (req, res, next) => {
       offer = { $in: [false, true] };
     }
 
-    let furnished = req.query.furnished;  //////////////////////////////
-
-    if (furnished === undefined || furnished === 'false') {/////////////////////////////////
-      furnished = { $in: [false, true] };//////////////////////////////////
-    }
-    let parking = req.query.parking;
-  
-    if (parking === undefined || parking === 'false') {
-      parking = { $in: [false, true] };
-    }
-
     let type = req.query.type;
 
     if (type === undefined || type === 'all') {
@@ -97,8 +86,6 @@ export const getListings = async (req, res, next) => {
     const listings = await Listing.find({
       name: { $regex: searchTerm, $options: 'i' },
       offer,
-      furnished,
-      parking,
       type,
     })
       .sort({ [sort]: order })
