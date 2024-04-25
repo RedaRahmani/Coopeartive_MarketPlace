@@ -10,8 +10,33 @@ import CreateListing from './pages/CreateListing';
 import UpdateListing from './pages/UpdateListing';
 import Listing from './pages/Listing';
 import Search from './pages/Search';
+import React, { useEffect } from 'react';
 
 export default function App() {
+  useEffect(() => {
+    // Load Botpress Web Chat Scripts
+    const loadBotpressScripts = () => {
+      const script1 = document.createElement('script');
+      script1.src = 'https://cdn.botpress.cloud/webchat/v1/inject.js';
+      document.body.appendChild(script1);
+
+      const script2 = document.createElement('script');
+      script2.src = 'https://mediafiles.botpress.cloud/7fd9885a-7ebe-4895-966d-04b29094fd67/webchat/config.js';
+      script2.defer = true;
+      document.body.appendChild(script2);
+
+      return () => {
+        document.body.removeChild(script1);
+        document.body.removeChild(script2);
+      };
+    };
+
+    const cleanup = loadBotpressScripts();
+
+    return () => {
+      cleanup();
+    };
+  }, []);
   return (
     <BrowserRouter>
     <Header/>
