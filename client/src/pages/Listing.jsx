@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { Navigation } from 'swiper/modules';
 import { MdProductionQuantityLimits } from "react-icons/md";
 import { BiCategoryAlt } from "react-icons/bi";
+import AddToCartButton from '../components/cartItems.jsx'
 
 
 import 'swiper/css/bundle';
@@ -111,6 +112,7 @@ export default function Listing() {
                 </p>
               )}
             </div>
+            <AddToCartButton />
             <p className='text-slate-800'>
               <span className='font-semibold text-black'>Description - </span>
               {listing.description}
