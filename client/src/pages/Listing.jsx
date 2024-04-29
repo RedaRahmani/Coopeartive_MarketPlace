@@ -112,7 +112,9 @@ export default function Listing() {
                 </p>
               )}
             </div>
-            <AddToCartButton />
+            {currentUser.role === 'client' && (
+              <AddToCartButton />
+            )}
             <p className='text-slate-800'>
               <span className='font-semibold text-black'>Description - </span>
               {listing.description}
@@ -125,7 +127,7 @@ export default function Listing() {
                   : `${listing.quantity} Quantities `}
               </li>
             </ul>
-            {currentUser && listing.userRef !== currentUser._id && !contact && (
+            {currentUser.role === 'client' && (
               <button onClick={()=>setContact(true)} className='bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 p-3'>
                 Contact landlord
               </button>

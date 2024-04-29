@@ -58,12 +58,38 @@ export default function SignUp() {
           onChange={handleChange}
         />
         <input
+          type='Date'
+          placeholder='birth'
+          className='border p-3 rounded-lg'
+          id='birth'
+          onChange={handleChange}
+        />
+        <input
+          type='Number'
+          placeholder='how Many employees'
+          className='border p-3 rounded-lg'
+          id='employes'
+          onChange={handleChange}
+        />
+        <input
+          type='String'
+          placeholder='Cooperative ID'
+          className='border p-3 rounded-lg'
+          id='cooperativeId'
+          onChange={handleChange}
+        />
+        <input
           type='password'
           placeholder='password'
           className='border p-3 rounded-lg'
           id='password'
           onChange={handleChange}
         />
+        <select id='role' value={formData.role} onChange={handleChange} required>
+          <option value="">Select Role</option>
+          <option value="client">Client</option>
+          <option value="coop">Cooperative</option>
+        </select>
 
         <button
           disabled={loading}

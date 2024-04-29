@@ -149,9 +149,16 @@ export default function Profile() {
     }
   }
   return (
+    
     <div className='p-3 max-w-lg mx-auto'>
 
-      <h1 className='text-xl font-semibold text-center my-7'>Profile</h1>
+      {currentUser.role === 'client' && (
+        <h1 className='text-xl font-semibold text-center my-7'>Profile</h1>
+      )}
+
+      {currentUser.role === 'coop' && (
+              <h1 className='text-xl font-semibold text-center my-7'>Cooperative Dashboard</h1>
+            )}
 
       <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
         <input 
@@ -180,11 +187,14 @@ export default function Profile() {
         <input type="text" placeholder='username' id='username' defaultValue={currentUser.username} className='border p-3 rounded-lg' onChange={handleChange} />
         <input type="email" placeholder='email' id='email' defaultValue={currentUser.email} className='border p-3 rounded-lg' onChange={handleChange} />
         <input type="password" placeholder='password' id='password' className='border p-3 rounded-lg' onChange={handleChange} />
-        
         <button disabled={loading} className='bg-slate-700 text-white border p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-85'>{loading ? 'Loading...' : 'Update'}</button>
-        <Link className='bg-green-700 text-white p-3 rounded-lg uppercase text-center hover:opacity-95' to={"/create-listing"}>
-          Create Listing
-        </Link>
+
+        {currentUser.role === 'coop' && (
+          <>
+            <Link className='bg-green-700 text-white p-3 rounded-lg uppercase text-center hover:opacity-95' to={"/create-listing"}>
+            Create Listing
+          </Link></>
+            )}
       </form>
 
       <div className='flex justify-between mt-5'>
@@ -196,8 +206,12 @@ export default function Profile() {
 
         <p className='text-red-700 mt-5'>{error ? error : ''}</p>
         <p className='text-green-700 mt-5'>{updateSuccess ? 'user is updated successfully!' : ''}</p>
-        <button onClick={handleShowListings} className='text-green-700 w-full'>Show Listings</button>
-        <p>{showListingsError ? 'Error showing listings' : ''}</p>
+        {currentUser.role === 'coop' && (
+          <>
+            <button onClick={handleShowListings} className='text-green-700 w-full'>Show Listings</button>
+            <p>{showListingsError ? 'Error showing listings' : ''}</p>  
+          </>
+            )}
 
         {userListings && userListings.length > 0 && 
         <div className='flex flex-col gap-4'>

@@ -4,9 +4,13 @@ import { errorHandler } from '../utils/error.js';
 import jwt from 'jsonwebtoken';
 
 export const signup = async (req, res, next) => {
-  const { username, email, password } = req.body;
+  const { username, email, password, role, cooperativeId, birth, employes } = req.body;
+  if(role === 'coop' && !cooperativeId) {
+    return res.status(400).json({error: 'Cooperative ID is required for cooperative registration'});
+  }
+
   const hashedPassword = bcryptjs.hashSync(password, 10);
-  const newUser = new User({ username, email, password: hashedPassword });
+  const newUser = new User({ username, email, password: hashedPassword, role, birth, employes, cooperativeId });
   try {
     await newUser.save();
     res.status(201).json('User created successfully!');

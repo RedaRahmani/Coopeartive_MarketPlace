@@ -64,7 +64,9 @@ export default function Header() {
                 <li className=' text-slate-700 hover:underline'>Sign In</li>
                 )}
                 </Link>
-                <CartList />
+                {currentUser.role === 'client' && (
+               <CartList />
+                )}
             </ul>
         </div>
     </header>
