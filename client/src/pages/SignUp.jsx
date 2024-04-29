@@ -6,12 +6,18 @@ export default function SignUp() {
   const [formData, setFormData] = useState({});
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [selectedRole, setSelectedRole] = useState('');
+
   const navigate = useNavigate();
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.id]: e.target.value,
-    });
+    })
+
+  };
+  const handleRoleChange = (e) => {
+    setSelectedRole(e.target.value);
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -64,7 +70,7 @@ export default function SignUp() {
           id='birth'
           onChange={handleChange}
         />
-        <input
+        {/* <input
           type='Number'
           placeholder='how Many employees'
           className='border p-3 rounded-lg'
@@ -77,7 +83,37 @@ export default function SignUp() {
           className='border p-3 rounded-lg'
           id='cooperativeId'
           onChange={handleChange}
-        />
+        /> */}
+        {/* <select id='role' value={formData.role} onChange={handleChange} required>
+          <option value="">Select Role</option>
+          <option value="client">Client</option>
+          <option value="coop">Cooperative</option>
+        </select> */}
+        <select
+        value={selectedRole}
+        onChange={handleRoleChange}
+        className='border p-3 rounded-lg'
+      >
+        <option value=''>Select Role</option>
+        <option value='client'>Client</option>
+        <option value='coop'>Cooperative</option>
+      </select>
+        {selectedRole === 'coop' && (
+        <>
+          <input
+            type="text"
+            placeholder='Cooperative ID'
+            id='cooperativeId'
+            className='border p-3 rounded-lg'
+          />
+          <input
+            type="number"
+            placeholder='Number of Employees'
+            id='employes'
+            className='border p-3 rounded-lg'
+          />
+        </>
+      )}
         <input
           type='password'
           placeholder='password'
@@ -85,11 +121,6 @@ export default function SignUp() {
           id='password'
           onChange={handleChange}
         />
-        <select id='role' value={formData.role} onChange={handleChange} required>
-          <option value="">Select Role</option>
-          <option value="client">Client</option>
-          <option value="coop">Cooperative</option>
-        </select>
 
         <button
           disabled={loading}
@@ -97,7 +128,11 @@ export default function SignUp() {
         >
           {loading ? 'Loading...' : 'Sign Up'}
         </button>
-        <OAuth />
+        {selectedRole === 'client' && (
+        <>
+          <OAuth />
+        </>
+      )}
       </form>
       <div className='flex gap-2 mt-5'>
         <p>Have an account?</p>
