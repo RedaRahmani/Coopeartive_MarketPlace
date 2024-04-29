@@ -21,6 +21,7 @@ const userSchema = new mongoose.Schema({
     role:{
         type: String,
         enum: ['client', 'coop'],
+        default: 'client',
         required: true,
     },
     cooperativeId:{
