@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema({
     },
     birth:{
         type: Date,
-        required: true,
+        required: false,
     },
     employes:{
         type: Number,
