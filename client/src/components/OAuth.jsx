@@ -1,4 +1,4 @@
-import {GoogleAuthProvider, getAuth, signInWithPopup} from '@firebase/auth';
+import {GoogleAuthProvider, getAuth, signInWithPopup, FacebookAuthProvider} from '@firebase/auth';
 import { app } from '../firebase';
 import { useDispatch } from 'react-redux';
 import { signInSuccess } from '../redux/user/userSlice';
@@ -33,9 +33,40 @@ export default function OAuth() {
             console.log('could not sign in with google' , error);
         }
     }
+    const handleFacebookClick = async () => {
+      try{
+          const provider = new FacebookAuthProvider();
+          const auth = getAuth(app);
+
+          const result = await signInWithPopup(auth, provider);
+          console.log('Facebook Sign-In Result:', result);
+
+
+          const res = await fetch('/api/auth/facebook',{
+              method: 'POST',
+              headers: {
+                  'content-Type': 'application/json',
+              },
+              body:  JSON.stringify({name: result.user.displayName, email: result.user.email, photo: result.user.photoURL}),
+          })
+
+          console.log('Response from Server:', res);
+          const data = await res.json()
+          console.log('Data from Server:', data);
+          dispatch(signInSuccess(data));
+          navigate('/')
+      }catch(error){
+          console.log('could not sign in with google' , error);
+      }
+  }
   return (
+    <>
     <button onClick={handleGoogleClick} type='button' className='bg-red-700 text-white p-3 rounded-lg uppercase hover:opacity-95'>
       Continue With Google
     </button>
+    <button onClick={handleFacebookClick} type='button' className='bg-red-700 text-white p-3 rounded-lg uppercase hover:opacity-95'>
+    Continue With Facebook
+  </button>
+  </>
   )
 }
