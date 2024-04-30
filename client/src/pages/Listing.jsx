@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { Navigation } from 'swiper/modules';
 import { MdProductionQuantityLimits } from "react-icons/md";
 import { BiCategoryAlt } from "react-icons/bi";
+import AddToCartButton from '../components/cartItems.jsx'
 
 
 import 'swiper/css/bundle';
@@ -111,6 +112,9 @@ export default function Listing() {
                 </p>
               )}
             </div>
+            {currentUser.role === 'client' && (
+              <AddToCartButton />
+            )}
             <p className='text-slate-800'>
               <span className='font-semibold text-black'>Description - </span>
               {listing.description}
@@ -123,7 +127,7 @@ export default function Listing() {
                   : `${listing.quantity} Quantities `}
               </li>
             </ul>
-            {currentUser && listing.userRef === currentUser._id && !contact && (
+            {currentUser.role === 'client' && (
               <button onClick={()=>setContact(true)} className='bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 p-3'>
                 Contact landlord
               </button>

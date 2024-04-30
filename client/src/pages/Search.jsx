@@ -139,7 +139,7 @@ const Search = () => {
                                 onChange={handleChange}
                                 checked={sidebardata.type === 'all'}
                             />
-                            <span>Beaute & Artisanat & Agroalimentaire</span>
+                            <span>All</span>
                         </div>
                     </div>
                     <div className='flex gap-2 flex-wrap'>

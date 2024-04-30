@@ -11,6 +11,22 @@ const userSchema = new mongoose.Schema({
         required: true,
         unique: true,
     },
+    birth:{
+        type: Date,
+        required: true,
+    },
+    employes:{
+        type: Number,
+    },
+    role:{
+        type: String,
+        enum: ['client', 'coop'],
+        default: 'client',
+        required: true,
+    },
+    cooperativeId:{
+        type: String,
+    },
     password: {
         type: String,
         required: true,

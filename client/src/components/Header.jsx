@@ -3,6 +3,8 @@ import {FaSearch} from 'react-icons/fa';
 import {Link , useNavigate} from 'react-router-dom';
 import {useSelector} from 'react-redux';
 import { useEffect, useState } from 'react';
+import { BiCartAlt } from "react-icons/bi";
+import CartList from '../components/cartlist'
 
 
 export default function Header() {
@@ -62,6 +64,13 @@ export default function Header() {
                 <li className=' text-slate-700 hover:underline'>Sign In</li>
                 )}
                 </Link>
+                {/* {currentUser.role === 'client' && (
+               <CartList />
+                )}
+                 */}
+                 {currentUser && currentUser.role === 'client' && (
+  <CartList />
+)}
             </ul>
         </div>
     </header>
