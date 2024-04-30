@@ -107,7 +107,11 @@ const CartList = () => {
             setLoading(false);
         }
     };
-
+    const calculateTotalPrice = () => {
+        return cartItems.reduce((total, cartItem) => {
+            return total + cartItem.regularPrice * cartItem.quantity;
+        }, 0);
+    };
     return (
         <>
             <div className="relative">
@@ -123,6 +127,7 @@ const CartList = () => {
                         <h2 className="text-2xl font-semibold">Cart Items</h2>
                         <button className="text-red-500" onClick={() => setShowCart(false)}>Close</button>
                     </div>
+                    <h3 className="text-lg font-bold">TOTAL: ${calculateTotalPrice()}</h3>
                     {loading ? (
                         <div className="text-center">Loading...</div>
                     ) : error ? (
