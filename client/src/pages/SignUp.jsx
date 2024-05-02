@@ -124,7 +124,15 @@ export default function SignUp() {
             placeholder='Number of Employees'
             id='employes'
             className='border p-3 rounded-lg'
+            onChange={handleChange}
           />
+          <textarea
+          type='text'
+          placeholder='description...'
+          className='border p-3 rounded-lg'
+          id='description'
+          onChange={handleChange}
+        />
         </>
       )}
         <input

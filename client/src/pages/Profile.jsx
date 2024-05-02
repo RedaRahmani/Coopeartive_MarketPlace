@@ -47,6 +47,7 @@ export default function Profile() {
     ()=>{
       getDownloadURL(uploadTask.snapshot.ref).then
       ((downloadURL) =>{
+        localStorage.setItem('avatar', downloadURL)
         setFormData({...formData, avatar: downloadURL})
       })
     }
@@ -70,6 +71,7 @@ export default function Profile() {
           body: JSON.stringify(formData),
         })
         const data = await res.json();
+        console.log(data)
         if(data.success === false ) {
           dispatch(updateUserFailure(data.message));
         }
@@ -186,6 +188,8 @@ export default function Profile() {
         </p>
         <input type="text" placeholder='username' id='username' defaultValue={currentUser.username} className='border p-3 rounded-lg' onChange={handleChange} />
         <input type="email" placeholder='email' id='email' defaultValue={currentUser.email} className='border p-3 rounded-lg' onChange={handleChange} />
+        <input type="text" placeholder='description' id='description' defaultValue={currentUser.description} className='border p-3 rounded-lg' onChange={handleChange} />
+
         <input type="password" placeholder='password' id='password' className='border p-3 rounded-lg' onChange={handleChange} />
         <button disabled={loading} className='bg-slate-700 text-white border p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-85'>{loading ? 'Loading...' : 'Update'}</button>
 
@@ -237,3 +241,5 @@ export default function Profile() {
     </div>
   )
 }
+
+

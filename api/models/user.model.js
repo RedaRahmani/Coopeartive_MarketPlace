@@ -15,6 +15,10 @@ const userSchema = new mongoose.Schema({
         type: Date,
         required: false,
     },
+    description:{
+        type: String,
+        required: false,
+    },
     employes:{
         type: Number,
     },
@@ -33,8 +37,8 @@ const userSchema = new mongoose.Schema({
     },
     avatar:{
         type: String,
+        required:true,
         default: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrIFkoONKRD6J2i9qZj4NRlKPnzJ6uUSQn6TQ3Hc5HqA&s"
-
     },
 }, {timestamps: true});
 
