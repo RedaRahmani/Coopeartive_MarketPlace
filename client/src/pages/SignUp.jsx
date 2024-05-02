@@ -127,7 +127,7 @@ export default function SignUp() {
             onChange={handleChange}
           />
           <textarea
-          type='text'
+          type='textarea'
           placeholder='description...'
           className='border p-3 rounded-lg'
           id='description'

@@ -109,41 +109,86 @@ const Userinfo = () => {
     }
 
     return (
+        // <div className="container mx-auto py-8 flex">
+        //     <div className="w-2/4 mr-4">
+        //         <img src={userData.avatar} alt="User Avatar" className="w-full rounded-lg" />
+        //         <div className='mt-4'>
+        //             <h3 className="text-xl font-semibold mb-2">Description</h3>
+        //             <p className="text-gray-700">{userData.description}</p>
+        //         </div>
+        //     </div>
+        //     <div className="w-3/5 bg-gray-100 p-2">
+        //         <h2 className="text-2xl mb-4">User Information</h2>
+        //         <ul className="">
+        //             <li className="py-2">
+        //                 <span className="font-bold">Username:</span> {userData.username}
+        //             </li>
+        //             <li className="py-2">
+        //                 <span className="font-bold">Email:</span> {userData.email}
+        //             </li>
+        //             <li className="py-2">
+        //                 <span className="font-bold">Role:</span> {userData.role}
+        //             </li>
+        //             <li className="py-2">
+        //                 <span className="font-bold">Cooperative ID:</span> {userData.cooperativeId}
+        //             </li>
+        //             <li className="py-2">
+        //                 <span className="font-bold">Birth:</span> {new Date(userData.birth).toLocaleDateString()}
+        //             </li>
+        //             <li className="py-2">
+        //                 <span className="font-bold">Created At:</span> {new Date(userData.createdAt).toLocaleString()}
+        //             </li>
+        //             <li className="py-2">
+        //                 <span className="font-bold">Updated At:</span> {new Date(userData.updatedAt).toLocaleString()}
+        //             </li>
+        //         </ul>
+        //     </div>
+        // </div>
         <div className="container mx-auto py-8 flex">
-            <div className="w-1/4 mr-4">
-                <img src={userData.avatar} alt="User Avatar" className="w-full rounded-lg" />
-                <div className='mt-4'>
-                    <h3 className="text-xl font-semibold mb-2">Description</h3>
-                    <p className="text-gray-700">{userData.description}</p>
-                </div>
-            </div>
-            <div className="w-3/5 bg-gray-100 p-6">
-                <h2 className="text-2xl mb-4">User Information</h2>
-                <ul className="divide-y divide-gray-300">
-                    <li className="py-2">
-                        <span className="font-bold">Username:</span> {userData.username}
-                    </li>
-                    <li className="py-2">
-                        <span className="font-bold">Email:</span> {userData.email}
-                    </li>
-                    <li className="py-2">
-                        <span className="font-bold">Role:</span> {userData.role}
-                    </li>
-                    <li className="py-2">
-                        <span className="font-bold">Cooperative ID:</span> {userData.cooperativeId}
-                    </li>
-                    <li className="py-2">
-                        <span className="font-bold">Birth:</span> {new Date(userData.birth).toLocaleDateString()}
-                    </li>
-                    <li className="py-2">
-                        <span className="font-bold">Created At:</span> {new Date(userData.createdAt).toLocaleString()}
-                    </li>
-                    <li className="py-2">
-                        <span className="font-bold">Updated At:</span> {new Date(userData.updatedAt).toLocaleString()}
-                    </li>
-                </ul>
-            </div>
+    <div className="w-1/2 mr-4">
+        <img src={userData.avatar} alt="User Avatar" className="w-full rounded-lg" />
+        <div className='mt-4'>
+            <h3 className="text-xl font-semibold mb-2">About Me</h3>
+            <p className="text-gray-700">{userData.description}</p>
         </div>
+    </div>
+    <div className="bg-gray-100 p-4 rounded-lg">
+            <h2 className="text-2xl mb-4">User Information</h2>
+            <table className="table-auto w-full">
+                <tbody>
+                    <tr>
+                        <td className="font-bold pr-4">Username:</td>
+                        <td>{userData.username}</td>
+                    </tr>
+                    <tr>
+                        <td className="font-bold pr-4">Email:</td>
+                        <td>{userData.email}</td>
+                    </tr>
+                    <tr>
+                        <td className="font-bold pr-4">Employes:</td>
+                        <td>{userData.employes}</td>
+                    </tr>
+                    <tr>
+                        <td className="font-bold pr-4">Cooperative ID:</td>
+                        <td>{userData.cooperativeId}</td>
+                    </tr>
+                    <tr>
+                        <td className="font-bold pr-4">Creation Date:</td>
+                        <td>{new Date(userData.birth).toLocaleDateString()}</td>
+                    </tr>
+                    <tr>
+                        <td className="font-bold pr-4">Created At:</td>
+                        <td>{new Date(userData.createdAt).toLocaleString()}</td>
+                    </tr>
+                    <tr>
+                        <td className="font-bold pr-4">Updated At:</td>
+                        <td>{new Date(userData.updatedAt).toLocaleString()}</td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+</div>
+
     );
 };
 
