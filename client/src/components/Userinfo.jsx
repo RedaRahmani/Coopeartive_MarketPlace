@@ -89,6 +89,7 @@ const Userinfo = () => {
             try {
                 setLoading(true);
                 const response = await axios.get(`/api/user/${userRef}`);
+                
                 setUserData(response.data);
                 setLoading(false);
                 setError(false);

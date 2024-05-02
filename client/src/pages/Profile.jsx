@@ -193,12 +193,12 @@ export default function Profile() {
         <input type="password" placeholder='password' id='password' className='border p-3 rounded-lg' onChange={handleChange} />
         <button disabled={loading} className='bg-slate-700 text-white border p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-85'>{loading ? 'Loading...' : 'Update'}</button>
 
-        {currentUser.role === 'coop' && (
+        {/* {currentUser.role === 'coop' && (
           <>
             <Link className='bg-green-700 text-white p-3 rounded-lg uppercase text-center hover:opacity-95' to={"/create-listing"}>
             Create Listing
           </Link></>
-            )}
+            )} */}
       </form>
 
       <div className='flex justify-between mt-5'>
@@ -210,7 +210,7 @@ export default function Profile() {
 
         <p className='text-red-700 mt-5'>{error ? error : ''}</p>
         <p className='text-green-700 mt-5'>{updateSuccess ? 'user is updated successfully!' : ''}</p>
-        {currentUser.role === 'coop' && (
+        {/* {currentUser.role === 'coop' && (
           <>
             <button onClick={handleShowListings} className='text-green-700 w-full'>Show Listings</button>
             <p>{showListingsError ? 'Error showing listings' : ''}</p>  
@@ -236,8 +236,8 @@ export default function Profile() {
               </div>
 
             </div>
-          ))}
-        </div>}
+          ))} */}
+        {/* </div>} */}
     </div>
   )
 }

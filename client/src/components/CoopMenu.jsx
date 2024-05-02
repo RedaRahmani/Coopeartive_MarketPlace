@@ -79,6 +79,7 @@ import { FaFileInvoiceDollar } from "react-icons/fa6";
 import { BsBoxSeamFill } from "react-icons/bs";
 import { LuClipboardList } from "react-icons/lu";
 import { IoSettingsOutline } from "react-icons/io5";
+import { Link } from 'react-router-dom';
 
 
 const CoopMenu = () => {
@@ -88,19 +89,19 @@ const CoopMenu = () => {
         <h1 className="text-3xl font-bold text-gray-800 mr-4">Cooperative Dashboard</h1>
         <div className="border-t border-gray-400 flex-grow"></div>
       </div>
-      <button className="mb-4 flex items-center hover:bg-gray-300 rounded w-full">
+      <Link to="/profile"  className="mb-4 flex items-center hover:bg-gray-300 rounded w-full">
         <div className="mr-2">
           <VscAccount className="h-5 w-5" />
         </div>
         <a href="#" className="block py-2 px-4">Account</a>
-      </button>
+      </Link>
 
-      <button className="mb-4 flex items-center hover:bg-gray-300 rounded w-full">
+      <Link to="/Product" className="mb-4 flex items-center hover:bg-gray-300 rounded w-full">
         <div className="mr-2">
           <BsBoxSeamFill className="h-5 w-5" />
         </div>
         <a href="#" className="block py-2 px-4">Products</a>
-      </button>
+      </Link>
 
       <button className="mb-4 flex items-center hover:bg-gray-300 rounded w-full">
         <div className="mr-2">
