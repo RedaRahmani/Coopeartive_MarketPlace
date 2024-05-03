@@ -55,7 +55,9 @@ export const getUserCart = async (req, res) => {
 // Controller function to update an item's quantity in the cart
 export const updateCartItemQuantity = async (req, res) => {
   try {
-    const { userRef, productId, quantity } = req.body;
+    const { userRef } = req.params;
+    const { productId } = req.body;
+    const { quantity } = req.body;
 
     // Find the user's cart
     const cart = await Cart.findOne({ userRef });
@@ -85,6 +87,29 @@ export const updateCartItemQuantity = async (req, res) => {
 };
 
 // Controller function to remove an item from the cart
+// export const removeItemFromCart = async (req, res) => {
+//   try {
+//     const { userRef, productId } = req.params;
+//     // console.log(productId)
+//     // Find the user's cart
+//     const cart = await Cart.findOne({ userRef });
+
+//     if (!cart) {
+//       return res.status(404).json({ error: 'Cart not found' });
+//     }
+
+//     // Filter out the item to be removed from the cart
+//     cart.items = cart.items.filter(item => item._id !== productId);
+//     // Save the updated cart to the database
+//     await cart.save();
+//     console.log(cart.items)
+//     return res.status(200).json(cart);
+//   } catch (error) {
+//     console.error('Error removing item from cart:', error);
+//     return res.status(500).json({ error: 'Internal server error' });
+//   }
+// };
+
 export const removeItemFromCart = async (req, res) => {
   try {
     const { userRef, productId } = req.params;
@@ -97,7 +122,7 @@ export const removeItemFromCart = async (req, res) => {
     }
 
     // Filter out the item to be removed from the cart
-    cart.items = cart.items.filter(item => item.productId !== productId);
+    cart.items = cart.items.filter(item => item.productId.toString() !== productId);
 
     // Save the updated cart to the database
     await cart.save();

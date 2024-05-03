@@ -10,7 +10,8 @@ router.post('/add', verifyToken,addItemToCart);
 router.get('/:userRef',verifyToken , getUserCart);
 
 // Route to update an item's quantity in the cart
-router.put('/update',verifyToken , updateCartItemQuantity);
+router.put('/update/:userRef',verifyToken , updateCartItemQuantity);
+
 
 // Route to remove an item from the cart
 router.delete('/remove/:userRef/:productId',verifyToken, removeItemFromCart);
