@@ -1,5 +1,9 @@
 import Cart from '../models/cart.model.js';
 
+
+import stripe from "stripe";
+
+
 // Controller function to add an item to the cart
 export const addItemToCart = async (req, res) => {
   try {
@@ -86,30 +90,6 @@ export const updateCartItemQuantity = async (req, res) => {
   }
 };
 
-// Controller function to remove an item from the cart
-// export const removeItemFromCart = async (req, res) => {
-//   try {
-//     const { userRef, productId } = req.params;
-//     // console.log(productId)
-//     // Find the user's cart
-//     const cart = await Cart.findOne({ userRef });
-
-//     if (!cart) {
-//       return res.status(404).json({ error: 'Cart not found' });
-//     }
-
-//     // Filter out the item to be removed from the cart
-//     cart.items = cart.items.filter(item => item._id !== productId);
-//     // Save the updated cart to the database
-//     await cart.save();
-//     console.log(cart.items)
-//     return res.status(200).json(cart);
-//   } catch (error) {
-//     console.error('Error removing item from cart:', error);
-//     return res.status(500).json({ error: 'Internal server error' });
-//   }
-// };
-
 export const removeItemFromCart = async (req, res) => {
   try {
     const { userRef, productId } = req.params;
@@ -131,5 +111,62 @@ export const removeItemFromCart = async (req, res) => {
   } catch (error) {
     console.error('Error removing item from cart:', error);
     return res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+export const checkoutSession = async (req, res) => {
+  try {
+    // Retrieve userRef from request body or session, assuming it's available
+    const { userRef } = req.params; // Assuming userRef is in the request body
+    const stripeSecretKey = process.env.STRIPE_KEY;
+    const stripeInstance = stripe(stripeSecretKey);
+
+    console.log(userRef)
+    // Retrieve the user's cart from the database
+    const cart = await Cart.findOne({ userRef });
+    console.log(cart)
+    if (!cart) {
+      return res.status(404).json({ error: 'Cart not found' });
+    }
+
+    // Prepare line items for the checkout session
+    // const lineItems = cart.items.map(item => ({
+    //   price_data: {
+    //     currency: 'usd',
+    //     product_data: {
+    //       _id: item.productId, // Access productName from the referenced Listing
+    //       // Add more product details as needed
+    //     },
+    //     unit_amount: item.regularPrice * 100, // Price in cents
+    //   },
+    //   quantity: item.quantity,
+    // }));
+    const lineItems = cart.items.map(item => ({
+      price_data: {
+        currency: 'usd',
+        product_data: {
+          name: 'Product Name', // Replace with the actual name of the product
+          description: 'Product Description', // Replace with the actual description of the product
+          // Add more product details as needed
+        },
+        unit_amount: item.regularPrice * 100, // Price in cents
+      },
+      quantity: item.quantity,
+    }));
+    
+    console.log(lineItems)
+    // Create a checkout session with Stripe
+    const session = await stripeInstance.checkout.sessions.create({
+      payment_method_types: ["card"],
+      mode: "payment",
+      line_items: lineItems, // Use prepared line items
+      success_url: "https://example.com/success",
+      cancel_url: "https://example.com/cancel",
+    });
+    // Return the session ID to the client
+    res.json({ sessionId: session.id });
+  } catch (error) {
+    console.error('Error creating checkout session:', error);
+    res.status(500).json({ error: 'Internal server error' });
   }
 };
