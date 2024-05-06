@@ -160,7 +160,7 @@ export const checkoutSession = async (req, res) => {
       payment_method_types: ["card"],
       mode: "payment",
       line_items: lineItems, // Use prepared line items
-      success_url: "https://example.com/success",
+      success_url: "http://localhost:5173/thankyou",
       cancel_url: "https://example.com/cancel",
     });
     // Return the session ID to the client

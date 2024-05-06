@@ -13,6 +13,7 @@ import UpdateListing from './pages/UpdateListing';
 import Listing from './pages/Listing';
 import Search from './pages/Search';
 import { useEffect } from 'react';
+import Thankyou from './pages/Thankyou';
 
 export default function App() {
   useEffect(() => {
@@ -49,6 +50,7 @@ export default function App() {
       <Route path='/about' element={<About/>} />
       <Route path='/search' element={<Search />} />
       <Route path='/listing/:listingId' element={<Listing/>} />
+      <Route path='/thankyou' element={<Thankyou/>} />
 
       <Route element={<PrivateRoute/>}>
       <Route path='/sellerdashboard' element={<SellerDashboard/> }/>

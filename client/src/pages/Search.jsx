@@ -122,6 +122,7 @@ const Search = () => {
                             <span>Beaute</span>
                         </div>
                         <div className='flex gap-2'>
+                        
                             <input
                                 type='checkbox'
                                 id='Artisanat'

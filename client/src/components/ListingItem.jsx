@@ -33,7 +33,7 @@ export default function ListingItem  ({listing})  {
             <span className=''>ingerdiants:</span>{listing.ingredients}
           </p>
           <p className='text-slate-500 mt-2 font-semibold '>
-            $
+            DH
             {listing.offer
               ? listing.discountPrice.toLocaleString('en-US')
               : listing.regularPrice.toLocaleString('en-US')}

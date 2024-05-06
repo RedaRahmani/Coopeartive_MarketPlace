@@ -199,12 +199,14 @@ import { useSelector } from 'react-redux';
 import ImageFrame from './imagefarme';
 import axios from 'axios';
 
+
 const Userinfo = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const [userData, setUserData] = useState(null);
     const { currentUser } = useSelector(state => state.user);
     const userRef = currentUser._id;
+    
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -232,51 +234,107 @@ const Userinfo = () => {
     }
 
     return (
-        <div className="container mx-auto py-8 flex">
-        <div className="w-1/2 mr-4">
-            <div className="max-w-md mt-4 bg-slate-200 text-black p-4 rounded-lg shadow-md transition-transform transform hover:scale-105">
-            <ImageFrame src={userData.avatar} alt="User Avatar" cadreSize="700" frameSize="5" frameColor="gray-500" className="" />
-                <h2 className="text-xl mb-2">User Description</h2>
-                <div className="description-container max-w-md">
-                    <p className="text-black-300">{userData.description}</p>
-                </div>
-            </div>
+    //     <div className="container mx-auto py-8 flex">
+    //     <div className="w-1/2 mr-4">
+    //         <div className="max-w-md  mt-4 bg-slate-200 text-black p-4 rounded-lg shadow-md transition-transform transform hover:scale-105">
+    //         <ImageFrame src={userData.avatar} alt="User Avatar" cadreSize="700" frameSize="5" frameColor="gray-500" className="" />
+    //             <h2 className="text-xl mb-2">User Description</h2>
+    //             <div className="description-container max-w-md">
+    //                 <p className="text-black-300">{userData.description}</p>
+    //             </div>
+    //         </div>
+    //     </div>
+    //     <div className="top-20 left-700 bg-slate-200 rounded-lg p-4 shadow-md transition-transform transform hover:scale-105">
+    //         <h2 className="text-2xl mb-4">User Information</h2>
+    //         <div className="max-w-md  text-gray-800 p-4 rounded-lg">
+    //             <form className="space-y-4">
+    //                 <div className="flex flex-wrap justify-between">
+    //                     <label className="font-bold">Username:</label>
+    //                     <span>{userData.username}</span>
+    //                 </div>
+    //                 <div className="flex flex-wrap justify-between">
+    //                     <label className="font-bold">Email:</label>
+    //                     <span>{userData.email}</span>
+    //                 </div>
+    //                 <div className="flex flex-wrap justify-between">
+    //                     <label className="font-bold">Role:</label>
+    //                     <span>{userData.role}</span>
+    //                 </div>
+    //                 <div className="flex flex-wrap justify-between">
+    //                     <label className="font-bold">Cooperative ID:</label>
+    //                     <span>{userData.cooperativeId}</span>
+    //                 </div>
+    //                 <div className="flex flex-wrap justify-between">
+    //                     <label className="font-bold">Birth:</label>
+    //                     <span>{new Date(userData.birth).toLocaleDateString()}</span>
+    //                 </div>
+    //                 <div className="flex flex-wrap justify-between">
+    //                     <label className="font-bold">Created At:</label>
+    //                     <span>{new Date(userData.createdAt).toLocaleString()}</span>
+    //                 </div>
+    //                 <div className="flex flex-wrap justify-between">
+    //                     <label className="font-bold">Updated At:</label>
+    //                     <span>{new Date(userData.updatedAt).toLocaleString()}</span>
+    //                 </div>
+    //             </form>
+    //         </div>
+    //     </div>
+    // </div>
+    <div className={"container mx-auto py-8 flex"}>
+      {/* User Description Section */}
+      <div className={"w-full md:w-1/2 mr-4 md:mr-0"}>
+        <div className={
+          "max-w-md mt-4 bg-slate-200 text-black p-4 rounded-lg shadow-md transition-transform transform hover:scale-105"
+        }>
+          <ImageFrame src={userData.avatar} alt="User Avatar" cadreSize="700" frameSize="5" frameColor="gray-500" className="" />
+          <h2 className="text-xl mb-2">User Description</h2>
+          <div className="description-container max-w-md">
+            <p className="text-black-300">{userData.description}</p>
+          </div>
         </div>
-        <div className="top-20 left-700 bg-slate-200 rounded-lg p-4 shadow-md transition-transform transform hover:scale-105">
-            <h2 className="text-2xl mb-4">User Information</h2>
-            <div className="max-w-md  text-gray-800 p-4 rounded-lg">
-                <form className="space-y-4">
-                    <div className="flex flex-wrap justify-between">
-                        <label className="font-bold">Username:</label>
-                        <span>{userData.username}</span>
-                    </div>
-                    <div className="flex flex-wrap justify-between">
-                        <label className="font-bold">Email:</label>
-                        <span>{userData.email}</span>
-                    </div>
-                    <div className="flex flex-wrap justify-between">
-                        <label className="font-bold">Role:</label>
-                        <span>{userData.role}</span>
-                    </div>
-                    <div className="flex flex-wrap justify-between">
-                        <label className="font-bold">Cooperative ID:</label>
-                        <span>{userData.cooperativeId}</span>
-                    </div>
-                    <div className="flex flex-wrap justify-between">
-                        <label className="font-bold">Birth:</label>
-                        <span>{new Date(userData.birth).toLocaleDateString()}</span>
-                    </div>
-                    <div className="flex flex-wrap justify-between">
-                        <label className="font-bold">Created At:</label>
-                        <span>{new Date(userData.createdAt).toLocaleString()}</span>
-                    </div>
-                    <div className="flex flex-wrap justify-between">
-                        <label className="font-bold">Updated At:</label>
-                        <span>{new Date(userData.updatedAt).toLocaleString()}</span>
-                    </div>
-                </form>
+      </div>
+
+      {/* User Information Section */}
+      <div className={"md:w-1/2 pl-4 md:pl-0"}>
+        <div className={"max-w-md text-gray-800 p-4 bg-slate-200 rounded-lg shadow-md transition-transform transform hover:scale-105"}>
+        <h2 className="text-2xl mb-4">User Information</h2>
+          <form className="space-y-4">
+            <div className="flex flex-wrap justify-between">
+              <label className="font-bold">Username:</label>
+              <span>{userData.username}</span>
             </div>
+            <div className="flex flex-wrap justify-between">
+              <label className="font-bold">Email:</label>
+              <span>{userData.email}</span>
+            </div>
+            <div className="flex flex-wrap justify-between">
+                 <label className="font-bold">Role:</label>
+                <span>{userData.role}</span>
+            </div>
+            <div className="flex flex-wrap justify-between">
+                <label className="font-bold">Cooperative ID:</label>
+                <span>{userData.cooperativeId}</span>
+            </div>
+            <div className="flex flex-wrap justify-between">
+                <label className="font-bold">Birth:</label>
+                <span>{new Date(userData.birth).toLocaleDateString()}</span>
+            </div>
+            <div className="flex flex-wrap justify-between">
+                <label className="font-bold">Created At:</label>
+                <span>{new Date(userData.createdAt).toLocaleString()}</span>
+            </div>
+            <div className="flex flex-wrap justify-between">
+                <label className="font-bold">Updated At:</label>
+                <span>{new Date(userData.updatedAt).toLocaleString()}</span>
+            </div>
+          </form>
         </div>
+      </div>
+
+      {/* Menu (add your menu component here) */}
+      <div className="fixed right-0 top-0 md:static md:w-1/4">
+        { /* Your menu component goes here */}
+      </div>
     </div>
     );
 };
