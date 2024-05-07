@@ -7,6 +7,8 @@ import { Navigation } from 'swiper/modules';
 import { MdProductionQuantityLimits } from "react-icons/md";
 import { BiCategoryAlt } from "react-icons/bi";
 import AddToCartButton from '../components/cartItems.jsx'
+import ReviewForm from '../components/ReviewForm.jsx';
+import Header from '../components/Header.jsx';
 
 
 import 'swiper/css/bundle';
@@ -137,6 +139,7 @@ export default function Listing() {
     //     </div>
     //   )}
     // </main>
+    <>
     <main>
   {loading && <p className='text-center my-7 text-2xl'>Loading...</p>}
   {error && (
@@ -209,6 +212,7 @@ export default function Listing() {
               : `${listing.quantity} Quantities `}
           </li>
         </ul>
+        <ReviewForm />
         {currentUser.role === 'client' && (
           <button onClick={()=>setContact(true)} className='bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 p-3'>
             Contact landlord
@@ -219,5 +223,6 @@ export default function Listing() {
     </div>
   )}
 </main>
+</>
   );
 }

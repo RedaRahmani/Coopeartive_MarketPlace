@@ -143,7 +143,7 @@ export const checkoutSession = async (req, res) => {
     // }));
     const lineItems = cart.items.map(item => ({
       price_data: {
-        currency: 'usd',
+        currency: 'mad',
         product_data: {
           name: 'Product Name', // Replace with the actual name of the product
           description: 'Product Description', // Replace with the actual description of the product

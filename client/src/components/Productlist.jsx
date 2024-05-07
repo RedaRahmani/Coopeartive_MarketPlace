@@ -162,17 +162,17 @@ const Productlist = () => {
   }, [currentUser._id]);
 
   return (
-    <div className="container mx-auto py-8">
+    <div className="container mx-auto py-8 pl-28">
       <div className="flex items-center justify-between mb-8">
-        <h1 className='text-2xl font-semibold'>User Listings</h1>
-        <Link className='bg-green-700 text-white p-3 rounded-lg uppercase text-center hover:opacity-95' to={"/create-listing"}>
+        <h1 className='text-2xl font-semibold pl-10'>User Listings</h1>
+        <Link className='bg-green-700 text-white p-3 rounded-lg uppercase text-center  hover:opacity-95' to={"/create-listing"}>
           Create Listing
         </Link>
       </div>
       {showListingsError ? (
         <p className="text-center mt-4">Error showing listings</p>
       ) : (
-        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8'>
+        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8 pl-10'>
           {userListings.map((listing) => (
             <div key={listing._id} className='border rounded-lg overflow-hidden shadow-md'>
               <img src={listing.imageUrls[0]} alt="listing cover" className='h-64 w-full object-cover' />

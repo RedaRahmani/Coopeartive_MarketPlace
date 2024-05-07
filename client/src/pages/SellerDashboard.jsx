@@ -1,12 +1,12 @@
 import React from 'react'
-import CoopMenu from '../components/CoopMenu'
-import Userinfo from '../components/Userinfo'
+import Dashboard from '../components/Userinfo'
+import Avatar from '../components/Avatar'
 
 const SellerDashboard = () => {
   return (
     <>
-    <CoopMenu />
-    <Userinfo />
+    <Avatar />
+    <Dashboard />
     </>
   )
 }

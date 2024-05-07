@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ListingItem from '../components/ListingItem';
+import Header from '../components/Header';
 
 const Search = () => {
     const navigate = useNavigate();
@@ -85,6 +86,8 @@ const Search = () => {
     };
 
     return (
+        <>
+        <Header />
         <div className='flex flex-col md:flex-row'>
             <div className='p-7 border-b-2 md:border-r-2 md:min-h-screen'>
                 <form onSubmit={handleSubmit} className='flex flex-col gap-8'>
@@ -191,6 +194,7 @@ const Search = () => {
                 </div>
             </div>
         </div>
+        </>
     );
 };
 
