@@ -15,6 +15,11 @@ const userSchema = new mongoose.Schema({
         type: Date,
         required: false,
     },
+    viewed: {
+        type: Number,
+        default: 0,
+        required: false,
+      },
     description:{
         type: String,
         required: false,

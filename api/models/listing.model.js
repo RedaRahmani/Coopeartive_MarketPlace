@@ -14,6 +14,11 @@ const listingSchema = new mongoose.Schema(
       type: [String],
       required: true,
     },
+    viewed: {
+      type: Number,
+      default: 0,
+      required: false,
+    },
     regularPrice: {
       type: Number,
       required: true,

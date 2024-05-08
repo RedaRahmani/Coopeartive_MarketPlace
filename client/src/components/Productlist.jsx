@@ -174,7 +174,7 @@ const Productlist = () => {
       ) : (
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8 pl-10'>
           {userListings.map((listing) => (
-            <div key={listing._id} className='border rounded-lg overflow-hidden shadow-md'>
+            <div key={listing._id} className='border rounded-lg overflow-hidden shadow-md hover:scale-110 focus: outline-none focus:shadow-outline'>
               <img src={listing.imageUrls[0]} alt="listing cover" className='h-64 w-full object-cover' />
               <div className='p-4'>
                 <h2 className='text-lg font-semibold text-gray-800'>{listing.name}</h2>
