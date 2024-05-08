@@ -17,15 +17,7 @@ const SellerDashboard = () => {
   const {currentUser} = useSelector((state) => state.user);
 
   useEffect(() => {
-    // const fetchViews = async () => {
-    //   try {
-    //     const res = await fetch(`/api/listing/viewed${currentUser._id}`); // Replace '/api/views' with your actual API endpoint
-    //     const data = await res.json();
-    //     setViews(data.views); // Assuming the API returns an object with a 'views' property
-    //   } catch (error) {
-    //     console.error(error);
-    //   }
-    // };
+    
     const fetchViews = async () => {
       try {
         const res = await fetch(`/api/listing/productviewed?id=${currentUser._id}`, {
@@ -35,7 +27,7 @@ const SellerDashboard = () => {
           },
         })
         const data = await res.json();
-    setViews(data.views); // Assuming the API returns an object with a 'views' property
+    setViews(data.views); 
       } catch (error) {
         console.error(error);
       }
@@ -102,35 +94,57 @@ const SellerDashboard = () => {
         {/* Product Views Form */}
         <div className="flex justify-between items-center bg-custom-green  text-white p-4 pl-28" style={{ height: '200px' }}>
     {/* Product Views Information */}
-    <div className="flex items-center bg-gray-900 border-solid p-20 rounded-lg mr-16 hover:scale-110 focus: outline-none focus:shadow-outline">
-        <label className="mr-2">Views:</label>
-        <span className="text-slate-200">1000</span> {/* Replace "1000" with actual product views */}
+    <div className="bg-white shadow-md rounded-lg p-6 mb-4 hover:scale-110 focus:outline-none focus:shadow-outline" style={{ width: '200px' }}>
+  <div className="mb-4">
+    <h2 className="text-lg font-semibold text-gray-800 mb-2">Product Views</h2>
+    <hr className="border-gray-300" />
+  </div>
+  <div className="flex justify-between items-center">
+    <div className="flex items-center">
+      <span className="mr-2 font-semibold text-gray-700">Views:</span>
+      <span className="text-gray-700">{views !== null ? views : 'Loading...'}</span>
     </div>
-    <div className="flex items-center bg-gray-900 border-solid p-20 rounded-lg mr-16 hover:scale-110 focus: outline-none focus:shadow-outline">
-        <label className="mr-2">Orders:</label>
-        <span className="text-slate-200">1000</span> {/* Replace "1000" with actual product views */}
-    </div>
-    <div className="flex items-center bg-gray-900 border-solid p-20 rounded-lg mr-16 hover:scale-110 focus: outline-none focus:shadow-outline">
-        <label className="mr-2">Cart Adds::</label>
-        <span className="text-slate-200">1000</span> {/* Replace "1000" with actual product views */}
-    </div>
+    {/* Add more information or actions here */}
+  </div>
 </div>
 
-
-        {/* Cart Adds Form */}
-        
-      </div>
-      <div className="flex justify-between items-center bg-custom-green text-black p-4 pl-28" style={{ height: '200px' }}>
-        {/* Product Views Form */}
-        <div className="flex justify-between items-center bg-custom-green  text-white p-4 pl-28" style={{ height: '200px' }}>
-          {/* Product Views Information */}
-          <div className="flex items-center bg-gray-900 border-solid p-20 rounded-lg mr-16 hover:scale-110 focus: outline-none focus:shadow-outline">
-            <label className="mr-2">Views:</label>
-            <span className="text-slate-200">{views !== null ? views : 'Loading...'}</span> {/* Render views if available, otherwise show 'Loading...' */}
+          <div className="w-10"></div>
+          <div className="bg-white shadow-md rounded-lg p-6 mb-4" style={{ width: '200px' }}>
+            <h2 className="text-xl font-semibold mb-4">Product Orders</h2>
+            <div className="flex justify-between items-center">
+              <div className="flex items-center">
+                <span className="mr-2">Orders:</span>
+                <span className="text-gray-700">{views !== null ? views : 'Loading...'}</span>
+              </div>
+              {/* Add more information or actions here */}
+            </div>
           </div>
-          {/* Your other divs */}
-        </div>
+          <div className="w-10"></div>
+          <div className="bg-white shadow-md rounded-lg p-6 mb-4" style={{ width: '200px' }}>
+            <h2 className="text-xl font-semibold mb-4">Product Orders</h2>
+            <div className="flex justify-between items-center">
+              <div className="flex items-center">
+                <span className="mr-2">Orders:</span>
+                <span className="text-gray-700">{views !== null ? views : 'Loading...'}</span>
+              </div>
+              {/* Add more information or actions here */}
+            </div>
+          </div>
+          <div className="w-10"></div>
+          <div className="bg-white shadow-md rounded-lg p-6 mb-4 "style={{ width: '200px' }}>
+            <h2 className="text-xl font-semibold mb-4">Product Carts</h2>
+            <div className="flex justify-between items-center">
+              <div className="flex items-center">
+                <span className="mr-2">Carts:</span>
+                <span className="text-gray-700">{views !== null ? views : 'Loading...'}</span>
+              </div>
+              {/* Add more information or actions here */}
+            </div>
+          </div>
+</div>  
       </div>
+    
+
 
     </>
   )
