@@ -15,30 +15,11 @@ import { useSelector } from 'react-redux';
 
 const SellerDashboard = () => {
   const [views, setViews] = useState(null);
+  const [addToCart, setAddToCart] = useState(null);
   const [shares, setShares] = useState(null);
   const {currentUser} = useSelector((state) => state.user);
   const [recentOrders, setRecentOrders] = useState([]);
 
-  useEffect(() => {
-    const fetchRecentOrders = async () => {
-      try {
-        const res = await fetch(`/api/orders/recent?id=${currentUser._id}`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-        const data = await res.json();
-        setRecentOrders(data.orders);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    if (currentUser) {
-      fetchRecentOrders();
-    }
-  }, [currentUser]);
 
   useEffect(() => {
     
@@ -50,6 +31,7 @@ const SellerDashboard = () => {
             'Content-Type': 'application/json',
           },
         })
+        console.log(currentUser._id)
         const data = await res.json();
     setViews(data.views); 
       } catch (error) {
@@ -60,6 +42,31 @@ const SellerDashboard = () => {
    
     fetchViews();
   }, []);
+  useEffect(() => {
+    if (currentUser) { // Null check
+      console.log("Current user:", currentUser);
+      const fetchAddToCart = async () => {
+        try {
+          const res = await fetch(`/api/user/getaddtocart?id=${currentUser._id}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
+          console.log("Fetch response:", res);
+          const data = await res.json();
+          console.log("Fetched data:", data);
+          setAddToCart(data.addToCart); 
+        } catch (error) {
+          console.error(error);
+        }
+      };
+  
+      fetchAddToCart();
+    }
+  }, [currentUser]);
+  
+  
   useEffect(() => {
     if (currentUser) { // Null check
       const fetchShare = async () => {
@@ -173,18 +180,18 @@ const SellerDashboard = () => {
             <div className="flex justify-between items-center">
               <div className="flex items-center">
                 <span className="mr-2">Orders:</span>
-                <span className="text-gray-700">{views !== null ? views : 'Loading...'}</span>
+                <span className="text-gray-700">{addToCart !== null ? addToCart : 'Loading...'}</span>
               </div>
               {/* Add more information or actions here */}
             </div>
           </div>
           <div className="w-10"></div>
-          <div className="bg-white shadow-md rounded-lg p-6 mb-4 "style={{ width: '200px' }}>
-            <h2 className="text-xl font-semibold mb-4">Product Carts</h2>
+          <div className="bg-white shadow-md rounded-lg p-6 mb-4" style={{ width: '200px' }}>
+            <h2 className="text-xl font-semibold mb-4">Add To Cart</h2>
             <div className="flex justify-between items-center">
               <div className="flex items-center">
-                <span className="mr-2">Carts:</span>
-                <span className="text-gray-700">{views !== null ? views : 'Loading...'}</span>
+                <span className="mr-2">Add To Cart:</span>
+                <span className="text-gray-700">{addToCart !== null ? addToCart : 'Loading...'}</span>
               </div>
               {/* Add more information or actions here */}
             </div>

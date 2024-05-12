@@ -73,7 +73,6 @@ const AddToCartButton = () => {
     const handleAddToCart = async () => {
         try {
             setLoading(true);
-            
             const res = await axios.get(`/api/listing/get/${listingId}`);
             const data = res.data;
             if (data.success === false) {
@@ -90,8 +89,15 @@ const AddToCartButton = () => {
                 regularPrice: data.regularPrice,
                 discountPrice: data.discountPrice,
                 imageUrls: data.imageUrls,
+                
             };
-            console.log(cartItem);
+            console.log(cartItem.userRef)
+                // await axios.patch(`/api/user/addtocart?userId=${userRef}`, { addToCart: 1 });
+                // await axios.patch(`/api/user/addtocart?userId=${currentUser._id}`, { addToCartIncrement: 1 });
+                const Userresponse = await axios.patch(`/api/user/addtocart`, { userId: data.userRef, addToCart: 1 });
+                console.log('User updated addToCart:', Userresponse.data);
+
+
 
             const response = await axios.post('/api/cart/add', cartItem);
             console.log('Item added to cart:', response.data);

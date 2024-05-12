@@ -1,13 +1,54 @@
 import Cart from '../models/cart.model.js';
+import User from '../models/user.model.js';
 
 
 import stripe from "stripe";
 
 
 // Controller function to add an item to the cart
+// export const addItemToCart = async (req, res) => {
+//   try {
+//     const {userRef, productId, quantity, regularPrice, discountPrice, imageUrls , name , addToCart} = req.body;
+//     // Check if the user already has a cart
+//     let cart = await Cart.findOne({ userRef });
+
+//     // If the user doesn't have a cart, create a new one
+//     if (!cart) {
+//       cart = new Cart({ userRef, items: [] });
+//     }
+
+//     // Check if the item is already in the cart
+//     const existingItem = cart.items.find(item => item.productId === productId);
+
+//     // If the item is already in the cart, update its quantity
+//     if (existingItem) {
+//       existingItem.quantity += quantity;
+//     } else {
+//       // Otherwise, add the item to the cart
+//       cart.items.push({ productId, quantity, regularPrice, discountPrice, imageUrls , name , addToCart});
+//     }
+//     // Save the cart to the database
+//     await cart.save();
+//     const user = await User.findOneAndUpdate(
+//       { _id: userRef },
+//       { $inc: { addToCart: addToCart || 1 } }, // Increment addToCart by addToCart value or default to 1
+//       { new: true }
+//     );
+
+//     // Save the user document
+//     await user.save();
+
+//     return res.status(201).json({ cart, user });
+//   } catch (error) {
+//     console.error('Error adding item to cart:', error);
+//     return res.status(500).json({ error: 'Internal server error' });
+//   }
+// };
+
 export const addItemToCart = async (req, res) => {
   try {
-    const {userRef, productId, quantity, regularPrice, discountPrice, imageUrls , name} = req.body;
+    const { userRef, productId, quantity, regularPrice, discountPrice, imageUrls, name } = req.body;
+
     // Check if the user already has a cart
     let cart = await Cart.findOne({ userRef });
 
@@ -24,13 +65,13 @@ export const addItemToCart = async (req, res) => {
       existingItem.quantity += quantity;
     } else {
       // Otherwise, add the item to the cart
-      cart.items.push({ productId, quantity, regularPrice, discountPrice, imageUrls , name});
+      cart.items.push({ productId, quantity, regularPrice, discountPrice, imageUrls, name });
     }
 
     // Save the cart to the database
     await cart.save();
 
-    return res.status(201).json(cart);
+    return res.status(201).json({ cart });
   } catch (error) {
     console.error('Error adding item to cart:', error);
     return res.status(500).json({ error: 'Internal server error' });
