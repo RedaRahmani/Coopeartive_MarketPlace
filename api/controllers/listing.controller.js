@@ -93,6 +93,36 @@ export const viewed = async (req, res) => {
   }
 };
 
+
+export const shares = async (req, res) => {
+  try {
+    const { listingId } = req.body;
+
+    // Mettre à jour le compteur de partages pour le modèle Listing
+    const listing = await Listing.findByIdAndUpdate(
+      listingId,
+      { $inc: { shares: 1 } },
+      { new: true }
+    );
+
+    if (!listing) {
+      return res.status(404).json({ success: false, message: 'Annonce non trouvée' });
+    }
+
+    // S'il existe un utilisateur associé à l'annonce, mettre à jour son compteur de partages
+    const user = await User.findByIdAndUpdate(
+      listing.userRef,
+      { $inc: { shares: 1 } },
+      { new: true }
+    );
+
+    return res.status(200).json({ success: true, listing });
+  } catch (error) {
+    console.error('Erreur lors de la mise à jour des partages :', error);
+    return res.status(500).json({ success: false, message: 'Erreur interne du serveur' });
+  }
+};
+
 export const getViewed = async (req, res) => {
   try {
     const { id } = req.query;
@@ -110,6 +140,27 @@ export const getViewed = async (req, res) => {
     res.json({ success: true, views: listing.viewed });
   } catch (error) {
     console.error('Error fetching views:', error);
+    res.status(500).json({ success: false, message: 'Internal Server Error' });
+  }
+};
+
+export const getShared = async (req, res) => {
+  try {
+    const { id } = req.query;
+    if (!id) {
+      return res.status(400).json({ success: false, message: 'Missing id parameter' });
+    }
+    // Use the id parameter in your logic
+    // Find the listing by ID
+    const listing = await User.findById(id);
+
+    if (!listing) {
+      return res.status(404).json({ success: false, message: 'Listing not found' });
+    }
+
+    res.json({ success: true, shares: listing.shares });
+  } catch (error) {
+    console.error('Error fetching shared:', error);
     res.status(500).json({ success: false, message: 'Internal Server Error' });
   }
 };

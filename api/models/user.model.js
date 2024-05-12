@@ -20,6 +20,11 @@ const userSchema = new mongoose.Schema({
         default: 0,
         required: false,
       },
+      shares: {
+        type: Number,
+        default: 0,
+        required: false,
+      },
     description:{
         type: String,
         required: false,

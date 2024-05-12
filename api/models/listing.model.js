@@ -19,6 +19,11 @@ const listingSchema = new mongoose.Schema(
       default: 0,
       required: false,
     },
+    shares: {
+      type: Number,
+      default: 0,
+      required: false,
+    },
     regularPrice: {
       type: Number,
       required: true,
