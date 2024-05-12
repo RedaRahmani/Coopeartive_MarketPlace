@@ -84,6 +84,7 @@ const AddToCartButton = () => {
             console.log(data);
             const cartItem = {
                 productId: data._id,
+                name: data.name,
                 userRef: currentUser._id,
                 quantity: quantity,
                 regularPrice: data.regularPrice,

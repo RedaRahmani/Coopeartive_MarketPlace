@@ -7,7 +7,7 @@ import stripe from "stripe";
 // Controller function to add an item to the cart
 export const addItemToCart = async (req, res) => {
   try {
-    const {userRef, productId, quantity, regularPrice, discountPrice, imageUrls } = req.body;
+    const {userRef, productId, quantity, regularPrice, discountPrice, imageUrls , name} = req.body;
     // Check if the user already has a cart
     let cart = await Cart.findOne({ userRef });
 
@@ -24,7 +24,7 @@ export const addItemToCart = async (req, res) => {
       existingItem.quantity += quantity;
     } else {
       // Otherwise, add the item to the cart
-      cart.items.push({ productId, quantity, regularPrice, discountPrice, imageUrls });
+      cart.items.push({ productId, quantity, regularPrice, discountPrice, imageUrls , name});
     }
 
     // Save the cart to the database

@@ -8,6 +8,10 @@ const cartSchema = new mongoose.Schema(
     },
     items: [
       {
+        name: {
+          type: String,
+          required: true,
+        },
         productId: {
           type: mongoose.Schema.Types.ObjectId,
           ref: 'Listing', // Reference to the product listing
@@ -21,6 +25,11 @@ const cartSchema = new mongoose.Schema(
         regularPrice: {
           type: Number,
           required: true,
+        },
+        addToCart: {
+          type: Number,
+          default: 0,
+          required: false,
         },
         discountPrice: {
           type: Number,
