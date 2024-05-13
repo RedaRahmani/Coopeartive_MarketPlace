@@ -199,3 +199,24 @@ export const getListings = async (req, res, next) => {
     next(error);
   }
 };
+export const getAddToCart = async (req, res) => {
+  try {
+    const { id } = req.query;
+    console.log(id)
+    if (!id) {
+      return res.status(400).json({ success: false, message: 'Missing id parameter' });
+    }
+    // Use the id parameter in your logic
+    // Find the listing by ID
+    const user = await User.findById(id);
+
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'user not found' });
+    }
+
+    res.json({ success: true, addToCart: user.addToCart });
+  } catch (error) {
+    console.error('Error fetching views:', error);
+    res.status(500).json({ success: false, message: 'Internal Server Error' });
+  }
+};

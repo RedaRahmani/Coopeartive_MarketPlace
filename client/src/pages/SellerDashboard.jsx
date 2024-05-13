@@ -19,7 +19,25 @@ const SellerDashboard = () => {
   const [shares, setShares] = useState(null);
   const {currentUser} = useSelector((state) => state.user);
   const [recentOrders, setRecentOrders] = useState([]);
+  
+  useEffect(() => {
+    // Simulated fetch of recent orders
+    const fetchRecentOrders = async () => {
+      // Simulated data
+      const ordersData = [
+        { id: 1, product: "Product A", quantity: 2, total: "$50", status: "Pending" },
+        { id: 2, product: "Product B", quantity: 1, total: "$30", status: "Completed" },
+        { id: 3, product: "Product C", quantity: 3, total: "$80", status: "Shipped" },
+        { id: 4, product: "Product D", quantity: 1, total: "$20", status: "Pending" },
+        { id: 5, product: "Product E", quantity: 2, total: "$60", status: "Completed" }
+      ];
+      // Simulated delay
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      setRecentOrders(ordersData);
+    };
 
+    fetchRecentOrders();
+  }, []);
 
   useEffect(() => {
     
@@ -47,7 +65,7 @@ const SellerDashboard = () => {
       console.log("Current user:", currentUser);
       const fetchAddToCart = async () => {
         try {
-          const res = await fetch(`/api/user/getaddtocart?id=${currentUser._id}`, {
+          const res = await fetch(`/api/listing/addtocart?id=${currentUser._id}`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -161,6 +179,8 @@ const SellerDashboard = () => {
         </div>
 
           <div className="w-10"></div>
+
+
           <div className="bg-white shadow-md rounded-lg p-6 mb-4 hover:scale-110 focus:outline-none focus:shadow-outline" style={{ width: '200px' }}>
               <div className="mb-4">
                 <h2 className="text-lg font-semibold text-gray-800 mb-2">Product shares</h2>
@@ -174,55 +194,55 @@ const SellerDashboard = () => {
     {/* Add more information or actions here */}
               </div>
               </div>
+
+
+
           <div className="w-10"></div>
-          <div className="bg-white shadow-md rounded-lg p-6 mb-4" style={{ width: '200px' }}>
-            <h2 className="text-xl font-semibold mb-4">Product Orders</h2>
-            <div className="flex justify-between items-center">
-              <div className="flex items-center">
-                <span className="mr-2">Orders:</span>
-                <span className="text-gray-700">{addToCart !== null ? addToCart : 'Loading...'}</span>
+          <div className="bg-white shadow-md rounded-lg p-6 mb-4 hover:scale-110 focus:outline-none focus:shadow-outline" style={{ width: '200px' }}>
+              <div className="mb-4">
+                <h2 className="text-lg font-semibold text-gray-800 mb-2">add To Cart</h2>
+                <hr className="border-gray-300" />
               </div>
-              {/* Add more information or actions here */}
-            </div>
-          </div>
+              <div className="flex justify-between items-center">
+                <div className="flex items-center">
+                  <span className="mr-2 font-semibold text-gray-700">addToCart:</span>
+                  <span className="text-gray-700">{addToCart !== null ? addToCart : 'Loading...'}</span>
+                </div>
+    {/* Add more information or actions here */}
+              </div>
+              </div>
+          
           <div className="w-10"></div>
-          <div className="bg-white shadow-md rounded-lg p-6 mb-4" style={{ width: '200px' }}>
-            <h2 className="text-xl font-semibold mb-4">Add To Cart</h2>
-            <div className="flex justify-between items-center">
-              <div className="flex items-center">
-                <span className="mr-2">Add To Cart:</span>
-                <span className="text-gray-700">{addToCart !== null ? addToCart : 'Loading...'}</span>
-              </div>
-              {/* Add more information or actions here */}
-            </div>
-          </div>
+          
 </div>  
       </div>    
-      <div className="flex-grow p-8 pl-40">
-        <h2 className="text-2xl font-bold mb-4">Recent Orders</h2>
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
-            <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Order ID</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quantity</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-            </tr>
-          </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            {recentOrders.map((order) => (
-              <tr key={order.id}>
-                <td className="px-6 py-4 whitespace-nowrap">{order.id}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{order.product}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{order.quantity}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{order.total}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{order.status}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <div className="flex-grow p-8 pl-40 pr-0 border-solid">
+          <h2 className="text-2xl font-bold mb-5 pl-12">  Recent Orders</h2>
+          <div className="w-full overflow-hidden rounded-lg shadow-lg pl-10 pr-10">
+            <table className="w-full divide-y divide-gray-200 ">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Order ID</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quantity</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {recentOrders.map((order) => (
+                  <tr key={order.id} className="transition-all duration-300 ease-in-out hover:bg-gray-100 transform hover:scale-105">
+                    <td className="px-6 py-4 whitespace-nowrap">{order.id}</td>
+                    <td className="px-6 py-4 whitespace-nowrap">{order.product}</td>
+                    <td className="px-6 py-4 whitespace-nowrap">{order.quantity}</td>
+                    <td className="px-6 py-4 whitespace-nowrap">{order.total}</td>
+                    <td className="px-6 py-4 whitespace-nowrap">{order.status}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
 
 
     </>
