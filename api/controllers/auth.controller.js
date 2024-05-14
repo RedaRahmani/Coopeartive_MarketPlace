@@ -58,10 +58,6 @@ export const google = async (req, res, next) => {
       res.cookie('access_token', token, {httpOnly: true}).status(200).json(rest);
 
     }
-<<<<<<< HEAD
-  } catch (error) { 
-    next(error)
-=======
   } catch{
     next(console.error())
   }
@@ -88,7 +84,6 @@ export const facebook = async (req, res, next) => {
     }
   } catch{
     next(console.error())
->>>>>>> 5b71c44a7a7ce778b7702d52f97e48e7c6a42730
   }
 }
 export const signOut = async (req, res, next) => {
