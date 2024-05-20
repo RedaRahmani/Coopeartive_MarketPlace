@@ -19,13 +19,13 @@ const cartSchema = new mongoose.Schema(
         },
         sellerId: {
           type: String,
-          ref: 'Seller', // Reference to the seller
+          ref: 'Seller',
           required: false,
         },
         quantity: {
           type: Number,
           required: true,
-          default: 1, // Default quantity is 1
+          default: 1,
         },
         regularPrice: {
           type: Number,

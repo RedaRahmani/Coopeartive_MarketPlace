@@ -4,7 +4,7 @@ const orderSchema = new mongoose.Schema(
   {
     userRef: {
       type: String,
-      required: false,
+      required: true,
     },
     items: [
       {
@@ -14,28 +14,32 @@ const orderSchema = new mongoose.Schema(
         },
         productId: {
           type: mongoose.Schema.Types.ObjectId,
-          ref: 'Listing', // Reference to the product listing
+          ref: 'Listing',
+          required: true,
+        },
+        sellerId: {
+          type: String,
           required: true,
         },
         quantity: {
           type: Number,
           required: true,
-          default: 1, // Default quantity is 1
         },
-        regularPrice: {
+        price: {
           type: Number,
           required: true,
         },
-        discountPrice: {
-          type: Number,
-          required: true,
-        },
-        imageUrls: {
-          type: [String],
-          required: true,
-        },
-      }
+      },
     ],
+    totalAmount: {
+      type: Number,
+      required: true,
+    },
+    status: {
+      type: String,
+      enum: ['Pending', 'Paid', 'Shipped', 'Delivered', 'Cancelled'],
+      default: 'Pending',
+    },
   },
   { timestamps: true }
 );

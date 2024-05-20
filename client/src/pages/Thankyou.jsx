@@ -1,7 +1,40 @@
-import React from 'react';
-import Header from '../components/Header';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
 
 const ThankYou = () => {
+  const { sessionId } = useParams(); // Retrieve sessionId from URL parameters
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const createOrder = async () => {
+      try {
+        const response = await axios.post('/api/orders/createorder', { sessionId });
+        if (response.status === 201) {
+          // Redirect to order confirmation page or update the UI accordingly
+          navigate('/thankyou');
+        }
+      } catch (error) {
+        console.error('Error creating order:', error);
+        setError('Failed to create order. Please try again.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    createOrder();
+  }, [sessionId, navigate]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
   return (
   <>
     <Header />
