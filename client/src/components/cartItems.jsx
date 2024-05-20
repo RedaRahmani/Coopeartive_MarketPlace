@@ -1,63 +1,3 @@
-// import React, { useState, useEffect } from 'react';
-// import axios from 'axios';
-// import { useParams } from 'react-router-dom';
-
-// const AddToCartButton = () => {
-//     const [quantity, setQuantity] = useState(1);
-//     const { listingId } = useParams();
-//     const [loading, setLoading] = useState(false);
-//     const [error, setError] = useState(false);
-
-//     useEffect(() => {
-//         const fetchListing = async () => {
-//             try {
-//                 setLoading(true);
-//                 const res = await axios.get(`/api/listing/get/${listingId}`);
-//                 const data = res.data;
-//                 if (data.success === false) {
-//                     setError(true);
-//                     setLoading(false);
-//                     return;
-//                 }
-//                 console.log(data);
-//                 const cartItem = {
-//                     productId: data._id,
-//                     userRef: data.name, // Assuming listingId is the product ID
-//                     quantity: quantity,
-//                     regularPrice: data.regularPrice,
-//                     discountPrice: data.discountPrice,
-//                     imageUrls: data.imageUrls,
-//                 };
-//                 console.log(cartItem)
-//                 const response = await axios.post('/api/cart/add', cartItem);
-//                 console.log('Item added to cart:', response.data);
-//                 setLoading(false);
-//                 setError(false);
-//             } catch (error) {
-//                 setError(true);
-//                 setLoading(false);
-//             }
-//         };
-//         fetchListing();
-//     }, []); // Make sure to include listingId in the dependency array
-
-//     const handleAddToCart = () => {
-//         // Handle adding to cart logic here
-//     };
-
-//     return (
-//         <div>
-//             <input
-//                 type="number"
-//                 value={quantity}
-//                 onChange={(e) => setQuantity(e.target.value)}
-//             />
-//             <button onClick={handleAddToCart}>Add to Cart</button>
-//         </div>
-//     );
-// };
-
-// export default AddToCartButton;
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
@@ -85,22 +25,24 @@ const AddToCartButton = () => {
                 productId: data._id,
                 name: data.name,
                 userRef: currentUser._id,
+                sellerId: data.userRef,
                 quantity: quantity,
                 regularPrice: data.regularPrice,
                 discountPrice: data.discountPrice,
                 imageUrls: data.imageUrls,
-                
             };
-            console.log(cartItem.userRef)
-                // await axios.patch(`/api/user/addtocart?userId=${userRef}`, { addToCart: 1 });
-                // await axios.patch(`/api/user/addtocart?userId=${currentUser._id}`, { addToCartIncrement: 1 });
-                const Userresponse = await axios.patch(`/api/user/addtocart`, { userId: data.userRef, addToCart: 1 });
-                console.log('User updated addToCart:', Userresponse.data);
-
-
-
+            console.log(data.userRef)
+            console.log(cartItem.sellerId)
+            const userResponse = await axios.post(`/api/user/addtocart`, { userId: data.userRef, addToCart: 1 });
+            console.log('User updated addToCart:', userResponse.data);
             const response = await axios.post('/api/cart/add', cartItem);
             console.log('Item added to cart:', response.data);
+
+            // If the item was successfully added to cart, proceed to create orders
+            if (!error) {
+                await createOrder(cartItem.sellerId, cartItem);
+            }
+
             setLoading(false);
             setError(false);
         } catch (error) {
@@ -108,7 +50,19 @@ const AddToCartButton = () => {
             setLoading(false);
         }
     };
-
+    // Function to create order
+    const createOrder = async (sellerId, cartItem) => {
+        try {
+            const orderData = {
+                userRef: sellerId,
+                items: [cartItem]
+            };
+            const orderResponse = await axios.post(`/api/order/create`, orderData);
+            console.log('Order created:', orderResponse.data);
+        } catch (error) {
+            console.error('Error creating order:', error);
+        }
+    };
     return (
         <div>
             <label>Quantitie:</label>

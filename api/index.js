@@ -7,6 +7,7 @@ import cookieParser from 'cookie-parser';
 import listingRouter from './routes/listing.route.js';
 import cartRouter from './routes/cart.route.js';
 import reviewRouter from './routes/review.route.js'
+import order from './routes/orders.route.js';
 import session from 'express-session';
 import cors from 'cors';
 dotenv.config();
@@ -38,6 +39,7 @@ app.use('/api/auth', authRouter);
 app.use('/api/listing', listingRouter);
 app.use('/api/cart', cartRouter);
 app.use('/api/review', reviewRouter)
+app.use('/api/orders', order)
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;

@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const cartSchema = new mongoose.Schema(
+const orderSchema = new mongoose.Schema(
   {
     userRef: {
       type: String,
@@ -17,11 +17,6 @@ const cartSchema = new mongoose.Schema(
           ref: 'Listing', // Reference to the product listing
           required: true,
         },
-        sellerId: {
-          type: String,
-          ref: 'Seller', // Reference to the seller
-          required: false,
-        },
         quantity: {
           type: Number,
           required: true,
@@ -30,11 +25,6 @@ const cartSchema = new mongoose.Schema(
         regularPrice: {
           type: Number,
           required: true,
-        },
-        addToCart: {
-          type: Number,
-          default: 0,
-          required: false,
         },
         discountPrice: {
           type: Number,
@@ -50,6 +40,6 @@ const cartSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const Cart = mongoose.model('Cart', cartSchema);
+const Order = mongoose.model('Order', orderSchema);
 
-export default Cart;
+export default Order;

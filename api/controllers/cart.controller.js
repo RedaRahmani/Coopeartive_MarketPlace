@@ -1,5 +1,6 @@
 import Cart from '../models/cart.model.js';
 import User from '../models/user.model.js';
+import Order from '../models/order.model.js'
 
 
 import stripe from "stripe";
@@ -47,12 +48,10 @@ import stripe from "stripe";
 
 export const addItemToCart = async (req, res) => {
   try {
-    const { userRef, productId, quantity, regularPrice, discountPrice, imageUrls, name } = req.body;
-
-    // Check if the user already has a cart
+    const { userRef, productId, quantity, regularPrice, discountPrice, imageUrls, name , sellerId } = req.body;
+    console.log(sellerId)
     let cart = await Cart.findOne({ userRef });
 
-    // If the user doesn't have a cart, create a new one
     if (!cart) {
       cart = new Cart({ userRef, items: [] });
     }
@@ -65,7 +64,7 @@ export const addItemToCart = async (req, res) => {
       existingItem.quantity += quantity;
     } else {
       // Otherwise, add the item to the cart
-      cart.items.push({ productId, quantity, regularPrice, discountPrice, imageUrls, name });
+      cart.items.push({ productId, quantity, regularPrice, discountPrice, imageUrls, name ,sellerId });
     }
 
     // Save the cart to the database
@@ -157,7 +156,6 @@ export const removeItemFromCart = async (req, res) => {
 
 export const checkoutSession = async (req, res) => {
   try {
-    // Retrieve userRef from request body or session, assuming it's available
     const { userRef } = req.params; // Assuming userRef is in the request body
     const stripeSecretKey = process.env.STRIPE_KEY;
     const stripeInstance = stripe(stripeSecretKey);
@@ -170,25 +168,12 @@ export const checkoutSession = async (req, res) => {
       return res.status(404).json({ error: 'Cart not found' });
     }
 
-    // Prepare line items for the checkout session
-    // const lineItems = cart.items.map(item => ({
-    //   price_data: {
-    //     currency: 'usd',
-    //     product_data: {
-    //       _id: item.productId, // Access productName from the referenced Listing
-    //       // Add more product details as needed
-    //     },
-    //     unit_amount: item.regularPrice * 100, // Price in cents
-    //   },
-    //   quantity: item.quantity,
-    // }));
     const lineItems = cart.items.map(item => ({
       price_data: {
         currency: 'mad',
         product_data: {
-          name: 'Product Name', // Replace with the actual name of the product
-          description: 'Product Description', // Replace with the actual description of the product
-          // Add more product details as needed
+          name: item.name,
+          description: 'Product Description',
         },
         unit_amount: item.regularPrice * 100, // Price in cents
       },
