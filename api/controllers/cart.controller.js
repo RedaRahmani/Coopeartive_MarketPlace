@@ -11,7 +11,7 @@ export const addItemToCart = async (req, res) => {
     let cart = await Cart.findOne({ userRef });
 
     if (!cart) {
-      cart = new Cart({ userRef, items: [] });
+      cart = new Cart({ userRef, items: [] }); 
     }
 
     // Check if the item is already in the cart
@@ -250,16 +250,17 @@ export const createOrder = async (req, res) => {
   }
 };
 export const getOrder = async (req, res) => {
-  const { sellerId } = req.query;
+  const { userRef } = req.query;
   console.log('yes')
-  console.log(sellerId)
+  console.log(userRef)
   console.log('yes')
-  if (!sellerId) {
+  if (!userRef) {
     return res.status(400).json({ error: 'Seller ID is required' });
   }
 
   try {
-    const orders = await Order.find({ sellerId });
+    const orders = await Order.find({ userRef });
+    console.log(orders)
     res.status(200).json({ orders });
   } catch (error) {
     console.error('Error fetching orders:', error);
