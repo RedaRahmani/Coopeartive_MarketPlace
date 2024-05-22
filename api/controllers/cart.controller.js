@@ -155,6 +155,49 @@ export const checkoutSession = async (req, res) => {
   }
 };
 
+// export const createOrder = async (req, res) => {
+//   try {
+//     const { sessionId } = req.body;
+
+//     // Retrieve cart data based on the session ID
+//     const cart = await Cart.findOne({ userRef: req.user.id }); // Assuming user is authenticated
+
+//     if (!cart) {
+//       return res.status(404).json({ error: 'Cart not found' });
+//     }
+
+//     const items = cart.items.map(item => ({
+//       name: item.name,
+//       productId: item.productId,
+//       sellerId: item.sellerId,
+//       quantity: item.quantity,
+//       price: item.discountPrice, // or item.regularPrice depending on your logic
+//     }));
+
+//     const totalAmount = items.reduce((total, item) => total + item.price * item.quantity, 0);
+
+//     // Assuming you want to create a separate order for each seller
+//     const orders = await Promise.all(items.map(async (item) => {
+//       const order = new Order({
+//         userRef: item.sellerId, // Store the sellerId in userRef
+//         items: [item],
+//         totalAmount: item.price * item.quantity,
+//         status: 'Paid',
+//       });
+
+//       await order.save();
+//       return order;
+//     }));
+
+//     // Clear the cart after order creation
+//     await Cart.findOneAndDelete({ userRef: req.user.id });
+
+//     return res.status(201).json({ orders });
+//   } catch (error) {
+//     console.error('Error creating order:', error);
+//     return res.status(500).json({ error: 'Internal server error' });
+//   }
+// };
 export const createOrder = async (req, res) => {
   try {
     const { sessionId } = req.body;
@@ -174,18 +217,26 @@ export const createOrder = async (req, res) => {
       price: item.discountPrice, // or item.regularPrice depending on your logic
     }));
 
-    const totalAmount = items.reduce((total, item) => total + item.price * item.quantity, 0);
-
-    // Assuming you want to create a separate order for each seller
     const orders = await Promise.all(items.map(async (item) => {
-      const order = new Order({
-        userRef: item.sellerId, // Store the sellerId in userRef
-        items: [item],
-        totalAmount: item.price * item.quantity,
-        status: 'Paid',
-      });
+      // Check if there's already an existing order for this userRef (sellerId) and user
+      let order = await Order.findOne({ userRef: item.sellerId});
 
-      await order.save();
+      if (order) {
+        // If order exists, update it
+        order.items.push(item);
+        order.totalAmount += item.price * item.quantity;
+        await order.save();
+      } else {
+        // If no order exists, create a new one
+        order = new Order({
+          userRef: item.sellerId, // Store the sellerId in userRef
+          items: [item],
+          totalAmount: item.price * item.quantity,
+          status: 'Paid',
+        });
+        await order.save();
+      }
+
       return order;
     }));
 
@@ -198,3 +249,22 @@ export const createOrder = async (req, res) => {
     return res.status(500).json({ error: 'Internal server error' });
   }
 };
+export const getOrder = async (req, res) => {
+  const { sellerId } = req.query;
+  console.log('yes')
+  console.log(sellerId)
+  console.log('yes')
+  if (!sellerId) {
+    return res.status(400).json({ error: 'Seller ID is required' });
+  }
+
+  try {
+    const orders = await Order.find({ sellerId });
+    res.status(200).json({ orders });
+  } catch (error) {
+    console.error('Error fetching orders:', error);
+    res.status(500).json({ error: 'Server error' });
+  }
+};
+
+
