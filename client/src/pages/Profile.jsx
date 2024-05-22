@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage';
 import { app } from '../firebase';
-import { updateUserStart, updateUserFailure, updateUserSuccess, deleteUserFailure, deleteUserSuccess, deleteUserStart, signOutUserStart } from '../redux/user/userSlice';
+import { updateUserStart, updateUserFailure, updateUserSuccess, deleteUserFailure, deleteUserSuccess, signOutUserStart } from '../redux/user/userSlice';
 import { Link } from 'react-router-dom';
 import { LeftMenu } from '../components/Userinfo';
 import Avatar from '../components/Avatar';
@@ -16,8 +16,6 @@ const Profile = () => {
   const [fileUploadError, setFileUploadError] = useState(false);
   const [formData, setFormData] = useState({});
   const [updateSuccess, setUpdateSuccess] = useState(false);
-  const [showListingsError, setShowListingsError] = useState(false);
-  const [userListings, setUserListings] = useState([]);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -65,7 +63,6 @@ const Profile = () => {
         body: JSON.stringify(formData),
       });
       const data = await res.json();
-      console.log(data);
       if (data.success === false) {
         dispatch(updateUserFailure(data.message));
       } else {
@@ -74,23 +71,6 @@ const Profile = () => {
       }
     } catch (error) {
       dispatch(updateUserFailure(error.message));
-    }
-  };
-
-  const handleDeleteUser = async () => {
-    try {
-      dispatch(deleteUserStart());
-      const res = await fetch(`/api/user/delete/${currentUser._id}`, {
-        method: 'DELETE',
-      });
-      const data = await res.json();
-      if (data.success === false) {
-        dispatch(deleteUserFailure(data.message));
-        return;
-      }
-      dispatch(deleteUserSuccess(data));
-    } catch (error) {
-      dispatch(deleteUserFailure(error.message));
     }
   };
 
@@ -109,131 +89,183 @@ const Profile = () => {
     }
   };
 
-  const handleShowListings = async () => {
-    try {
-      setShowListingsError(false);
-      const res = await fetch(`/api/user/listings/${currentUser._id}`);
-      const data = await res.json();
-      if (data.success === false) {
-        setShowListingsError(true);
-        return;
-      }
-      setUserListings(data);
-    } catch (error) {
-      setShowListingsError(true);
-    }
-  };
-
-  const handleListingDelete = async (listingId) => {
-    try {
-      const res = await fetch(`/api/listing/delete/${listingId}`, {
-        method: "DELETE",
-      });
-      const data = await res.json();
-      if (data.success === false) {
-        console.log(data.message);
-        return;
-      }
-
-      setUserListings(prev => prev.filter((listing) => listing._id !== listingId));
-
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   return (
     <>
       <LeftMenu />
-
-      <div className='flex '>
-      <div className="ml-48 p-8 mr-10">
-        <div className="max-w-md bg-gray-100 rounded-lg shadow-md p-8 mb-8">
-          <ImageFrame src={currentUser.avatar} alt="User Avatar" cadreSize="700" frameSize="5" frameColor="gray-500" className="mx-auto mb-4" />
-          <h2 className="text-2xl font-semibold mb-2">User Description</h2>
-          <p>{currentUser.description}</p>
-        </div>
-        <div className="max-w-md bg-gray-100 rounded-lg shadow-md p-8">
-          <h2 className="text-2xl font-semibold mb-4">User Information</h2>
-          <div className="space-y-4">
-            <div className="flex justify-between">
-              <span className="font-semibold">Username:</span>
-              <span>{currentUser.username}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="font-semibold">Email:</span>
-              <span>{currentUser.email}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="font-semibold">Role:</span>
-              <span>{currentUser.role}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="font-semibold">Cooperative ID:</span>
-              <span>{currentUser.cooperativeId}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="font-semibold">Birth:</span>
-              <span>{new Date(currentUser.birth).toLocaleDateString()}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="font-semibold">Created At:</span>
-              <span>{new Date(currentUser.createdAt).toLocaleString()}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="font-semibold">Updated At:</span>
-              <span>{new Date(currentUser.updatedAt).toLocaleString()}</span>
-            </div>
+      <div className="max-w-4xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+        <div className="bg-white shadow-xl rounded-lg overflow-hidden">
+          <div className="px-4 py-5 bg-gradient-to-r from-purple-500 to-indigo-500 sm:px-6 flex justify-between items-center">
+            <h2 className="text-lg leading-6 font-bold text-white">Profile</h2>
           </div>
+          <form onSubmit={handleSubmit} className="px-4 py-5 sm:px-6">
+            <div className="flex justify-center mb-6">
+              <input
+                onChange={(e) => setFile(e.target.files[0])}
+                type="file"
+                ref={fileRef}
+                hidden
+                accept='image/*'
+              />
+              <img
+                onClick={() => fileRef.current.click()}
+                src={formData.avatar || currentUser.avatar}
+                alt="Profile"
+                className="rounded-full h-24 w-24 object-cover cursor-pointer border-4 border-indigo-500 shadow-lg"
+              />
+            </div>
+            <div className="text-center mb-6">
+              {fileUploadError ? (
+                <span className="text-red-700">Error Uploading Image (image must be less than 2MB)</span>
+              ) : filePerc > 0 && filePerc < 100 ? (
+                <span className="text-green-700">{`Uploading ${filePerc}%`}</span>
+              ) : filePerc === 100 ? (
+                <span className="text-green-700">Successfully uploaded!</span>
+              ) : ('')}
+            </div>
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 mb-6">
+              <div>
+                <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">
+                  Username
+                </label>
+                <input
+                  type="text"
+                  id="firstName"
+                  defaultValue={currentUser.username}
+                  onChange={handleChange}
+                  className="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-300"
+                />
+              </div>
+              <div>
+                <label htmlFor="lastName" className="block text-sm font-medium text-gray-700">
+                  Birth
+                </label>
+                <input
+                  type="text"
+                  id="lastName"
+                  defaultValue={currentUser.birth}
+                  onChange={handleChange}
+                  className="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-300"
+                />
+              </div>
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                  Email
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  defaultValue={currentUser.email}
+                  onChange={handleChange}
+                  className="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-300"
+                />
+              </div>
+              <div>
+                <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700">
+                  Phone number
+                </label>
+                <input
+                  type="text"
+                  id="phoneNumber"
+                  defaultValue={currentUser.cooperativeId}
+                  onChange={handleChange}
+                  className="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-300"
+                />
+              </div>
+              <div className="sm:col-span-2">
+                <label htmlFor="address" className="block text-sm font-medium text-gray-700">
+                  Description
+                </label>
+                <input
+                  type="text"
+                  id="address"
+                  defaultValue={currentUser.description}
+                  onChange={handleChange}
+                  className="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-300"
+                />
+              </div>
+              <div>
+                <label htmlFor="city" className="block text-sm font-medium text-gray-700">
+                  City
+                </label>
+                <input
+                  type="text"
+                  id="city"
+                  defaultValue={currentUser.city}
+                  onChange={handleChange}
+                  className="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-300"
+                />
+              </div>
+              <div>
+                <label htmlFor="country" className="block text-sm font-medium text-gray-700">
+                  Regions
+                </label>
+                <select
+                  id="country"
+                  defaultValue={currentUser.country}
+                  onChange={handleChange}
+                  className="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-300"
+                >
+                  <option value="Tanger-Tétouan-Al Hoceïma">Tanger-Tétouan-Al Hoceïma</option>
+                  <option value="Souss-Massa">Souss-Massa</option>
+                  <option value="Rabat-Salé-Kénitra">Rabat-Salé-Kénitra</option>
+                  <option value="Marrakech-Safi">Marrakech-Safi</option>
+                  <option value="Laâyoune-Sakia El Hamra">Laâyoune-Sakia El Hamra</option>
+                  <option value="L'Oriental">L'Oriental</option>
+                  <option value="Guelmim-Oued Noun">Guelmim-Oued Noun</option>
+                  <option value="Fès-Meknès">Fès-Meknès</option>
+                  <option value="Drâa-Tafilalet">Drâa-Tafilalet</option>
+                  <option value="Dakhla-Oued Ed-Dahab">Dakhla-Oued Ed-Dahab</option>
+                  <option value="Casablanca-Settat">Casablanca-Settat</option>
+                  <option value="Béni Mellal-Khénifra">Béni Mellal-Khénifra</option>
+                </select>
+              </div>
+              <div>
+                <label htmlFor="zip" className="block text-sm font-medium text-gray-700">
+                  ZIP
+                </label>
+                <input
+                  type="text"
+                  id="zip"
+                  defaultValue={currentUser.zip}
+                  onChange={handleChange}
+                  className="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-300"
+                />
+              </div>
+              <div className="sm:col-span-2">
+                <div className="flex items-center">
+                  <input
+                    id="defaultAddress"
+                    type="checkbox"
+                    className="h-4 w-4 text-indigo-600 border-gray-300 rounded"
+                  />
+                  <label htmlFor="defaultAddress" className="ml-2 block text-sm text-gray-900">
+                    Make this my default address
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div className="mt-6 flex justify-end">
+              <button
+                type="button"
+                onClick={handleSignOut}
+                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition duration-300"
+              >
+                Sign Out
+              </button>
+              <button
+                type="submit"
+                disabled={loading}
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ml-3"
+              >
+                {loading ? 'Loading...' : 'Save'}
+              </button>
+            </div>
+          </form>
         </div>
-      </div>
-      <div className='p-3 max-w-lg mx-auto'>
-
-        {currentUser.role === 'client' && (
-          <h1 className='text-xl font-semibold text-center my-7'>Profile</h1>
-        )}
-
-        {currentUser.role === 'coop' && (
-          <h1 className='text-xl font-semibold text-center my-7'>Cooperative Dashboard</h1>
-        )}
-
-        <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
-          <input
-            onChange={(e) => setFile(e.target.files[0])}
-            type="file"
-            ref={fileRef}
-            hidden
-            accept='image/*' />
-          <img onClick={() => fileRef.current.click()} src={formData.avatar || currentUser.avatar} alt="Profile" className='rounded-full h-24 w-24 object-cover cursor-pointer self-center mt-2' />
-          <p className='text-sm self-center'>
-            {fileUploadError ? (
-              <span className='text-red-700'>Error Upload Image (image must be less than 2mb)</span>) :
-              filePerc > 0 && filePerc < 100 ? (
-                <span className='text-green-700'>{`Uploading ${filePerc}%`}</span>
-              ) :
-                filePerc === 100 ? (
-                  <span className='text-green-700'> Successfully uploaded!</span>
-                ) : ('')
-            }
-          </p>
-          <input type="text" placeholder='username' id='username' defaultValue={currentUser.username} className='border p-3 rounded-lg' onChange={handleChange} />
-          <input type="email" placeholder='email' id='email' defaultValue={currentUser.email} className='border p-3 rounded-lg' onChange={handleChange} />
-          <input type="text" placeholder='description' id='description' defaultValue={currentUser.description} className='border p-3 rounded-lg' onChange={handleChange} />
-          <input type="password" placeholder='password' id='password' className='border p-3 rounded-lg' onChange={handleChange} />
-          <button disabled={loading} className='bg-slate-700 text-white border p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-85'>{loading ? 'Loading...' : 'Update'}</button>
-        </form>
-
-        <div className='flex justify-between mt-5'>
-          <span onClick={handleDeleteUser} className='text-red-700 cursor-pointer'>Delete account</span>
-          <span onClick={handleSignOut} className='text-red-700 cursor-pointer'>Sign out</span>
-        </div>
-
-        <p className='text-red-700 mt-5'>{error ? error : ''}</p>
-        <p className='text-green-700 mt-5'>{updateSuccess ? 'User is updated successfully!' : ''}</p>
-      </div>
       </div>
     </>
   );
 };
 
 export default Profile;
+

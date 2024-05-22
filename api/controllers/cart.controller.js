@@ -155,49 +155,7 @@ export const checkoutSession = async (req, res) => {
   }
 };
 
-// export const createOrder = async (req, res) => {
-//   try {
-//     const { sessionId } = req.body;
 
-//     // Retrieve cart data based on the session ID
-//     const cart = await Cart.findOne({ userRef: req.user.id }); // Assuming user is authenticated
-
-//     if (!cart) {
-//       return res.status(404).json({ error: 'Cart not found' });
-//     }
-
-//     const items = cart.items.map(item => ({
-//       name: item.name,
-//       productId: item.productId,
-//       sellerId: item.sellerId,
-//       quantity: item.quantity,
-//       price: item.discountPrice, // or item.regularPrice depending on your logic
-//     }));
-
-//     const totalAmount = items.reduce((total, item) => total + item.price * item.quantity, 0);
-
-//     // Assuming you want to create a separate order for each seller
-//     const orders = await Promise.all(items.map(async (item) => {
-//       const order = new Order({
-//         userRef: item.sellerId, // Store the sellerId in userRef
-//         items: [item],
-//         totalAmount: item.price * item.quantity,
-//         status: 'Paid',
-//       });
-
-//       await order.save();
-//       return order;
-//     }));
-
-//     // Clear the cart after order creation
-//     await Cart.findOneAndDelete({ userRef: req.user.id });
-
-//     return res.status(201).json({ orders });
-//   } catch (error) {
-//     console.error('Error creating order:', error);
-//     return res.status(500).json({ error: 'Internal server error' });
-//   }
-// };
 export const createOrder = async (req, res) => {
   try {
     const { sessionId } = req.body;
@@ -214,7 +172,7 @@ export const createOrder = async (req, res) => {
       productId: item.productId,
       sellerId: item.sellerId,
       quantity: item.quantity,
-      price: item.discountPrice, // or item.regularPrice depending on your logic
+      price: item.regularPrice, // or item.regularPrice depending on your logic
     }));
     console.log(items.price)
     const orders = await Promise.all(items.map(async (item) => {
