@@ -216,7 +216,7 @@ export const createOrder = async (req, res) => {
       quantity: item.quantity,
       price: item.discountPrice, // or item.regularPrice depending on your logic
     }));
-
+    console.log(items.price)
     const orders = await Promise.all(items.map(async (item) => {
       // Check if there's already an existing order for this userRef (sellerId) and user
       let order = await Order.findOne({ userRef: item.sellerId});
