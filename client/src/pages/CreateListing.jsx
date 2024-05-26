@@ -57,29 +57,105 @@ export default function CreateListing() {
     }
   };
 
-  const storeImage = async (file) => {
+  const resizeImage = (file, maxWidth, maxHeight) => {
     return new Promise((resolve, reject) => {
-      const storage = getStorage(app);
-      const fileName = new Date().getTime() + file.name;
-      const storageRef = ref(storage, fileName);
-      const uploadTask = uploadBytesResumable(storageRef, file);
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          const progress = 
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log(`Upload is ${progress}% done`);
-        },
-        (error)=>{
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+  
+      reader.onload = (event) => {
+        const img = new Image();
+        img.src = event.target.result;
+  
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+  
+          const scale = Math.min(maxWidth / img.width, maxHeight / img.height);
+          const width = img.width * scale;
+          const height = img.height * scale;
+  
+          canvas.width = maxWidth;
+          canvas.height = maxHeight;
+  
+          ctx.fillStyle = 'white';  // Optional: fill the canvas with a white background
+          ctx.fillRect(0, 0, maxWidth, maxHeight);
+  
+          const x = (maxWidth - width) / 2;
+          const y = (maxHeight - height) / 2;
+  
+          ctx.drawImage(img, x, y, width, height);
+  
+          canvas.toBlob((blob) => {
+            resolve(blob);
+          }, file.type);
+        };
+  
+        img.onerror = (error) => {
           reject(error);
-        },
-        ()=>{
-          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL)=>{
-            resolve(downloadURL)
-          });
-        }
-      )
-    })
+        };
+      };
+  
+      reader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  };
+  
+  // const storeImage = async (file) => {
+  //   return new Promise((resolve, reject) => {
+  //     const storage = getStorage(app);
+  //     const fileName = new Date().getTime() + file.name;
+  //     const storageRef = ref(storage, fileName);
+  //     const uploadTask = uploadBytesResumable(storageRef, file);
+  //     uploadTask.on(
+  //       "state_changed",
+  //       (snapshot) => {
+  //         const progress = 
+  //           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+  //         console.log(`Upload is ${progress}% done`);
+  //       },
+  //       (error)=>{
+  //         reject(error);
+  //       },
+  //       ()=>{
+  //         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL)=>{
+  //           resolve(downloadURL)
+  //         });
+  //       }
+  //     )
+  //   })
+  // };
+  const storeImage = async (file) => {
+    const maxWidth = 200; // Define your desired width
+    const maxHeight = 200; // Define your desired height
+
+    try {
+      const resizedImage = await resizeImage(file, maxWidth, maxHeight);
+      return new Promise((resolve, reject) => {
+        const storage = getStorage(app);
+        const fileName = new Date().getTime() + file.name;
+        const storageRef = ref(storage, fileName);
+        const uploadTask = uploadBytesResumable(storageRef, resizedImage);
+
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log(`Upload is ${progress}% done`);
+          },
+          (error) => {
+            reject(error);
+          },
+          () => {
+            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+              resolve(downloadURL);
+            });
+          }
+        );
+      });
+    } catch (error) {
+      throw new Error('Image resizing failed');
+    }
   };
 
   const handleRemoveImage = (index) => {

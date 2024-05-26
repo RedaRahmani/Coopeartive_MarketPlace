@@ -64,18 +64,34 @@ const AddToCartButton = () => {
         }
     };
     return (
-        <div>
-            <label>Quantitie:</label>
-            <input
-                type="number"
-                value={quantity}
-                onChange={(e) => setQuantity(e.target.value)}
-                className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-            />
-            <button onClick={handleAddToCart} 
-            className='bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded'
-            >Add to Cart</button>
-        </div>
+        // <div>
+        //     <label>Quantitie:</label>
+        //     <input
+        //         type="number"
+        //         value={quantity}
+        //         onChange={(e) => setQuantity(e.target.value)}
+        //         className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+        //     />
+        //     <button onClick={handleAddToCart} 
+        //     className='bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded'
+        //     >Add to Cart</button>
+        // </div>
+        <div className='p-4  rounded-md inline-block'>
+    <label className='block text-gray-700 text-sm font-semibold mb-1'>Quantity:</label>
+    <input
+        type="number"
+        value={quantity}
+        onChange={(e) => setQuantity(e.target.value)}
+        className='shadow-sm appearance-none border rounded-md w-24 py-1 px-2 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent'
+    />
+    <button 
+        onClick={handleAddToCart} 
+        className='ml-2 bg-green-500 hover:bg-green-700 text-white font-semibold py-1 px-3 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 transition duration-150 ease-in-out'
+    >
+        Add to Cart
+    </button>
+</div>
+
     );
 };
 

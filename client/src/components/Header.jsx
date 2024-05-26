@@ -5,6 +5,7 @@ import {useSelector} from 'react-redux';
 import { useEffect, useState } from 'react';
 import { BiCartAlt } from "react-icons/bi";
 import CartList from '../components/cartlist'
+import anousouk from '../assets/anousouk.png'
 
 
 export default function Header() {
@@ -31,8 +32,9 @@ export default function Header() {
         <div className='flex justify-between items-center max-w-6xl mx-auto p-3'>
             <Link to='/'>
             <h1 className='font-bold text-sm sm:text-xl flex flex-wrap'>
-                <span className='text-slate-500'>Coop</span>
-                <span className='text-slate-700'>erative</span>
+                {/* <span className='text-slate-500'>Coop</span>
+                <span className='text-slate-700'>erative</span> */}
+                <img src={anousouk} alt="Cooperative Logo" className='h-12 w-32 sm:h-16 sm:w-48' />
             </h1>
             </Link>
             <form

@@ -61,12 +61,34 @@ export default function Home() {
           <br />
           Unique products, authentic stories – welcome to our cooperative marketplace.
         </div>
-        <Link
+        {/* <Link
           to={'/search'}
           className='text-xs sm:text-sm text-blue-800 font-bold hover:underline'
         >
           Let's get started...
-        </Link>
+        </Link> */}
+        <Link
+  to={'/search'}
+  className='
+    text-xs sm:text-sm 
+    text-blue-800 
+    font-bold 
+    hover:underline 
+    hover:text-blue-600 
+    transition 
+    duration-300 
+    ease-in-out 
+    transform 
+    hover:scale-105 
+    focus:outline-none 
+    focus:ring-2 
+    focus:ring-blue-500 
+    focus:ring-offset-2 
+  '
+>
+  Let's get started...
+</Link>
+
       </div>
 
       {/* swiper */}
@@ -94,7 +116,27 @@ export default function Home() {
           <div className=''>
             <div className='my-3'>
               <h2 className='text-2xl font-semibold text-slate-600'>Recent offers</h2>
-              <Link className='text-sm text-blue-800 hover:underline' to={'/search?offer=true'}>Show more offers</Link>
+              <Link
+  to={'/search?offer=true'}
+  className='
+    text-xs sm:text-sm 
+    text-blue-800 
+    font-bold 
+    hover:underline 
+    hover:text-blue-600 
+    transition 
+    duration-300 
+    ease-in-out 
+    transform 
+    hover:scale-105 
+    focus:outline-none 
+    focus:ring-2 
+    focus:ring-blue-500 
+    focus:ring-offset-2 
+  '
+>
+Show more offers
+</Link>
             </div>
             <div className='flex flex-wrap gap-4'>
               {offerListings.map((listing) => (
