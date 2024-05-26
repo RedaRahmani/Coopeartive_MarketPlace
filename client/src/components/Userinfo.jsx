@@ -13,63 +13,41 @@ import {Link} from 'react-router-dom'
 
 export function LeftMenu  () {
     return (
-        <div className="fixed left-0 top-0 h-full w-1/7 bg-gray-900 text-white shadow-md  border-l border-gray-300">
-            <div className="mb-4  items-center justify-center ">
-                {/* <h2 className="text-l pt-4 pl-2 font-bold mb-6">Seller Dashboard</h2> */}
-                <Link to="/sellerdashboard" className="mb-4 flex items-center rounded pl-4 w-full">
-                
-                <span className="block py-2 px-4">Seller Dashboard</span>
-            </Link>
-                <Link to="/profile" className="mb-4 flex items-center hover:bg-gray-300 rounded pl-4 w-full">
-                <div className="mr-2">
-                    <VscAccount className="h-5 w-5" />
-                </div>
-                <span className="block py-2 px-4">Account</span>
-            </Link>
-
-            <Link to="/Product" className="mb-4 flex items-center hover:bg-gray-300 rounded pl-4 w-full">
-                <div className="mr-2">
-                    <BsBoxSeamFill className="h-5 w-5" />
-                </div>
-                <span className="block py-2 px-4">Products</span>
-            </Link>
-
-            <Link to="/orders" className="mb-4 flex items-center hover:bg-gray-300 rounded pl-4 w-full">
-                <div className="mr-2">
-                    <LuClipboardList className="h-5 w-5" />
-                </div>
-                <span className="block py-2 px-4">My Orders</span>
-            </Link>
-
-            <button className="mb-4 flex items-center hover:bg-gray-300 rounded pl-4 w-full">
-                <div className="mr-2">
-                    <FaFileInvoiceDollar className="h-5 w-5" />
-                </div>
-                <span className="block py-2 px-4">Transactions</span>
-            </button>
-
-            <button className="mb-4 flex items-center hover:bg-gray-300 rounded pl-4 w-full">
-                <div className="mr-2">
-                    <MdOutlineContactSupport className="h-5 w-5" />
-                </div>
-                <span className="block py-2 px-4">Support</span>
-            </button>
-
-            <button className="mb-4 flex items-center hover:bg-gray-300 rounded pl-4 w-full">
-                <div className="mr-2">
-                    <MdOutlineNotificationsActive className="h-5 w-5" />
-                </div>
-                <span className="block py-2 px-4">Notifications</span>
-            </button>
-
-            <button className="mb-4 flex items-center hover:bg-gray-300 rounded pl-4 w-full">
-                <div className="mr-2">
-                    <IoSettingsOutline className="h-5 w-5" />
-                </div>
-                <span className="block py-2 px-4">Settings</span>
-            </button>
-            </div>
+        <div className="fixed left-0 top-0 h-full w-64 bg-gradient-to-b from-gray-800 to-gray-600 text-white shadow-md">
+        <div className="p-6">
+          <Link to="/sellerdashboard" className="mb-4 flex items-center p-2 rounded hover:bg-gray-700 transition-colors">
+            <span className="text-2xl font-bold">Seller Dashboard</span>
+          </Link>
+          <Link to="/profile" className="mb-4 flex items-center p-2 rounded hover:bg-gray-700 transition-colors">
+            <VscAccount className="mr-3 h-6 w-6" />
+            <span className="text-lg">Account</span>
+          </Link>
+          <Link to="/Product" className="mb-4 flex items-center p-2 rounded hover:bg-gray-700 transition-colors">
+            <BsBoxSeamFill className="mr-3 h-6 w-6" />
+            <span className="text-lg">Products</span>
+          </Link>
+          <Link to="/orders" className="mb-4 flex items-center p-2 rounded hover:bg-gray-700 transition-colors">
+            <LuClipboardList className="mr-3 h-6 w-6" />
+            <span className="text-lg">My Orders</span>
+          </Link>
+          <Link to="/transactions" className="mb-4 flex items-center p-2 rounded hover:bg-gray-700 transition-colors">
+            <FaFileInvoiceDollar className="mr-3 h-6 w-6" />
+            <span className="text-lg">Transactions</span>
+          </Link>
+          <Link to="/support" className="mb-4 flex items-center p-2 rounded hover:bg-gray-700 transition-colors">
+            <MdOutlineContactSupport className="mr-3 h-6 w-6" />
+            <span className="text-lg">Support</span>
+          </Link>
+          <Link to="/notifications" className="mb-4 flex items-center p-2 rounded hover:bg-gray-700 transition-colors">
+            <MdOutlineNotificationsActive className="mr-3 h-6 w-6" />
+            <span className="text-lg">Notifications</span>
+          </Link>
+          <Link to="/settings" className="mb-4 flex items-center p-2 rounded hover:bg-gray-700 transition-colors">
+            <IoSettingsOutline className="mr-3 h-6 w-6" />
+            <span className="text-lg">Settings</span>
+          </Link>
         </div>
+      </div>
     );
 };
 

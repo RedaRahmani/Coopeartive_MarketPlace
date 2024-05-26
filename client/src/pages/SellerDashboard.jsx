@@ -26,6 +26,7 @@
 //           },
 //         });
 //         const data = await res.json();
+//         console.log('Fetched orders:', data.orders);
 //         setRecentOrders(data.orders);
 //       } catch (error) {
 //         console.error('Error fetching orders:', error);
@@ -104,7 +105,9 @@
 //     <>
 //       <div className="fixed left-0 top-0 h-full w-1/7 bg-gray-900 text-white shadow-md border-l border-gray-300">
 //         <div className="mb-4 items-center justify-center ">
-//           <h2 className="text-l pt-4 pl-2 font-bold mb-6">Seller Dashboard</h2>
+//         <Link to="/sellerdashboard" className="mb-4 flex items-center rounded pl-4 w-full">
+//                 <span className="block py-2 px-4">Seller Dashboard</span>
+//             </Link>
 //           <Link to="/profile" className="mb-4 flex items-center hover:bg-gray-300 rounded pl-4 w-full">
 //             <div className="mr-2">
 //               <VscAccount className="h-5 w-5" />
@@ -119,12 +122,12 @@
 //             <span className="block py-2 px-4">Products</span>
 //           </Link>
 
-//           <button className="mb-4 flex items-center hover:bg-gray-300 rounded pl-4 w-full">
+//           <Link  to ="/orders" className="mb-4 flex items-center hover:bg-gray-300 rounded pl-4 w-full">
 //             <div className="mr-2">
 //               <LuClipboardList className="h-5 w-5" />
 //             </div>
 //             <span className="block py-2 px-4">My Orders</span>
-//           </button>
+//           </Link>
 
 //           <button className="mb-4 flex items-center hover:bg-gray-300 rounded pl-4 w-full">
 //             <div className="mr-2">
@@ -205,11 +208,9 @@
 //               {/* Add more information or actions here */}
 //             </div>
 //           </div>
-          
-
-         
 
 //           <div className="w-10"></div>
+
 //           <div className="bg-white shadow-md rounded-lg p-6 mb-4 hover:scale-110 focus:outline-none focus:shadow-outline" style={{ width: '200px' }}>
 //             <div className="mb-4">
 //               <h2 className="text-lg font-semibold text-gray-800 mb-2">Add To Cart</h2>
@@ -237,23 +238,25 @@
 //                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product</th>
 //                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quantity</th>
 //                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
-//                 {/* <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total</th> */}
 //               </tr>
 //             </thead>
 //             <tbody className="bg-white divide-y divide-gray-200">
-//               {recentOrders.map((order) => (
-//                 <React.Fragment key={order._id}>
-//                   {order.items.map((item, index) => (
+//               {recentOrders.length > 0 ? (
+//                 recentOrders.map((order) => (
+//                   order.items.slice(-5).map((item, index) => (
 //                     <tr key={index} className="transition-all duration-300 ease-in-out hover:bg-gray-100 transform hover:scale-105">
 //                       <td className="px-6 py-4 whitespace-nowrap">{order._id}</td>
 //                       <td className="px-6 py-4 whitespace-nowrap">{item.name}</td>
 //                       <td className="px-6 py-4 whitespace-nowrap">{item.quantity}</td>
 //                       <td className="px-6 py-4 whitespace-nowrap">{item.price !== undefined ? item.price : 'N/A'}</td>
-//                       {/* <td className="px-6 py-4 whitespace-nowrap">{order.totalAmount}</td> */}
 //                     </tr>
-//                   ))}
-//                 </React.Fragment>
-//               ))}
+//                   ))
+//                 ))
+//               ) : (
+//                 <tr>
+//                   <td colSpan="4" className="px-6 py-4 whitespace-nowrap text-center">No recent orders found</td>
+//                 </tr>
+//               )}
 //             </tbody>
 //           </table>
 //         </div>
@@ -291,7 +294,6 @@ const SellerDashboard = () => {
           },
         });
         const data = await res.json();
-        console.log('Fetched orders:', data.orders); // Debugging log
         setRecentOrders(data.orders);
       } catch (error) {
         console.error('Error fetching orders:', error);
@@ -367,166 +369,111 @@ const SellerDashboard = () => {
   }, [currentUser]);
 
   return (
-    <>
-      <div className="fixed left-0 top-0 h-full w-1/7 bg-gray-900 text-white shadow-md border-l border-gray-300">
-        <div className="mb-4 items-center justify-center ">
-        <Link to="/sellerdashboard" className="mb-4 flex items-center rounded pl-4 w-full">
-                <span className="block py-2 px-4">Seller Dashboard</span>
-            </Link>
-          <Link to="/profile" className="mb-4 flex items-center hover:bg-gray-300 rounded pl-4 w-full">
-            <div className="mr-2">
-              <VscAccount className="h-5 w-5" />
-            </div>
-            <span className="block py-2 px-4">Account</span>
+    <div className="flex">
+
+      <div className="fixed left-0 top-0 h-full w-64 bg-gradient-to-b from-gray-800 to-gray-600 text-white shadow-md">
+        <div className="p-6">
+          <Link to="/sellerdashboard" className="mb-4 flex items-center p-2 rounded hover:bg-gray-700 transition-colors">
+            <span className="text-2xl font-bold">Seller Dashboard</span>
           </Link>
-
-          <Link to="/Product" className="mb-4 flex items-center hover:bg-gray-300 rounded pl-4 w-full">
-            <div className="mr-2">
-              <BsBoxSeamFill className="h-5 w-5" />
-            </div>
-            <span className="block py-2 px-4">Products</span>
+          <Link to="/profile" className="mb-4 flex items-center p-2 rounded hover:bg-gray-700 transition-colors">
+            <VscAccount className="mr-3 h-6 w-6" />
+            <span className="text-lg">Account</span>
           </Link>
-
-          <Link  to ="/orders" className="mb-4 flex items-center hover:bg-gray-300 rounded pl-4 w-full">
-            <div className="mr-2">
-              <LuClipboardList className="h-5 w-5" />
-            </div>
-            <span className="block py-2 px-4">My Orders</span>
+          <Link to="/Product" className="mb-4 flex items-center p-2 rounded hover:bg-gray-700 transition-colors">
+            <BsBoxSeamFill className="mr-3 h-6 w-6" />
+            <span className="text-lg">Products</span>
           </Link>
-
-          <button className="mb-4 flex items-center hover:bg-gray-300 rounded pl-4 w-full">
-            <div className="mr-2">
-              <FaFileInvoiceDollar className="h-5 w-5" />
-            </div>
-            <span className="block py-2 px-4">Transactions</span>
-          </button>
-
-          <button className="mb-4 flex items-center hover:bg-gray-300 rounded pl-4 w-full">
-            <div className="mr-2">
-              <MdOutlineContactSupport className="h-5 w-5" />
-            </div>
-            <span className="block py-2 px-4">Support</span>
-          </button>
-
-          <button className="mb-4 flex items-center hover:bg-gray-300 rounded pl-4 w-full">
-            <div className="mr-2">
-              <MdOutlineNotificationsActive className="h-5 w-5" />
-            </div>
-            <span className="block py-2 px-4">Notifications</span>
-          </button>
-
-          <button className="mb-4 flex items-center hover:bg-gray-300 rounded pl-4 w-full">
-            <div className="mr-2">
-              <IoSettingsOutline className="h-5 w-5" />
-            </div>
-            <span className="block py-2 px-4">Settings</span>
-          </button>
+          <Link to="/orders" className="mb-4 flex items-center p-2 rounded hover:bg-gray-700 transition-colors">
+            <LuClipboardList className="mr-3 h-6 w-6" />
+            <span className="text-lg">My Orders</span>
+          </Link>
+          <Link to="/transactions" className="mb-4 flex items-center p-2 rounded hover:bg-gray-700 transition-colors">
+            <FaFileInvoiceDollar className="mr-3 h-6 w-6" />
+            <span className="text-lg">Transactions</span>
+          </Link>
+          <Link to="/support" className="mb-4 flex items-center p-2 rounded hover:bg-gray-700 transition-colors">
+            <MdOutlineContactSupport className="mr-3 h-6 w-6" />
+            <span className="text-lg">Support</span>
+          </Link>
+          <Link to="/notifications" className="mb-4 flex items-center p-2 rounded hover:bg-gray-700 transition-colors">
+            <MdOutlineNotificationsActive className="mr-3 h-6 w-6" />
+            <span className="text-lg">Notifications</span>
+          </Link>
+          <Link to="/settings" className="mb-4 flex items-center p-2 rounded hover:bg-gray-700 transition-colors">
+            <IoSettingsOutline className="mr-3 h-6 w-6" />
+            <span className="text-lg">Settings</span>
+          </Link>
         </div>
       </div>
-      <div className="flex justify-between items-center bg-custom-green text-black p-4 pl-28" style={{ height: '200px' }}>
-        {/* Product Views Form */}
-        <div className="flex justify-between items-center bg-custom-green text-white p-4 pl-28" style={{ height: '200px' }}>
-          {/* Product Views Information */}
-          <div className="bg-white shadow-md rounded-lg p-6 mb-4 hover:scale-110 focus:outline-none focus:shadow-outline" style={{ width: '200px' }}>
-            <div className="mb-4">
+
+      <div className="ml-64 flex-grow p-8">
+        <div className="flex flex-wrap justify-between mb-8">
+          <div className="w-full sm:w-1/2 md:w-1/4 p-2">
+            <div className="bg-white shadow-md rounded-lg p-6 transform hover:scale-105 transition-transform">
               <h2 className="text-lg font-semibold text-gray-800 mb-2">Product Views</h2>
-              <hr className="border-gray-300" />
-            </div>
-            <div className="flex justify-between items-center">
-              <div className="flex items-center">
-                <span className="mr-2 font-semibold text-gray-700">Views:</span>
-                <span className="text-gray-700">{views !== null ? views : 'Loading...'}</span>
-              </div>
-              {/* Add more information or actions here */}
+              <hr className="border-gray-300 mb-4" />
+              <div className="text-gray-700 font-bold">Views: {views !== null ? views : 'Loading...'}</div>
             </div>
           </div>
-
-          <div className="w-10"></div>
-
-          <div className="bg-white shadow-md rounded-lg p-6 mb-4 hover:scale-110 focus:outline-none focus:shadow-outline" style={{ width: '200px' }}>
-            <div className="mb-4">
-              <h2 className="text-lg font-semibold text-gray-800 mb-2">Product shares</h2>
-              <hr className="border-gray-300" />
-            </div>
-            <div className="flex justify-between items-center">
-              <div className="flex items-center">
-                <span className="mr-2 font-semibold text-gray-700">Shares:</span>
-                <span className="text-gray-700">{shares !== null ? shares : 'Loading...'}</span>
-              </div>
-              {/* Add more information or actions here */}
+          <div className="w-full sm:w-1/2 md:w-1/4 p-2">
+            <div className="bg-white shadow-md rounded-lg p-6 transform hover:scale-105 transition-transform">
+              <h2 className="text-lg font-semibold text-gray-800 mb-2">Product Shares</h2>
+              <hr className="border-gray-300 mb-4" />
+              <div className="text-gray-700 font-bold">Shares: {shares !== null ? shares : 'Loading...'}</div>
             </div>
           </div>
-
-
-          <div className="w-10"></div>
-
-          <div className="bg-white shadow-md rounded-lg p-6 mb-4 hover:scale-110 focus:outline-none focus:shadow-outline" style={{ width: '200px' }}>
-            <div className="mb-4">
+          <div className="w-full sm:w-1/2 md:w-1/4 p-2">
+            <div className="bg-white shadow-md rounded-lg p-6 transform hover:scale-105 transition-transform">
               <h2 className="text-lg font-semibold text-gray-800 mb-2">Total Amount</h2>
-              <hr className="border-gray-300" />
-            </div>
-            <div className="flex justify-between items-center">
-              <div className="flex items-center">
-                <span className="mr-2 font-semibold text-gray-700">Total:</span>
-                <span className="text-gray-700">{shares !== null ? shares : 'Loading...'}</span>
-              </div>
-              {/* Add more information or actions here */}
+              <hr className="border-gray-300 mb-4" />
+              <div className="text-gray-700 font-bold">Total: {shares !== null ? shares : 'Loading...'}</div>
             </div>
           </div>
-
-          <div className="w-10"></div>
-
-          <div className="bg-white shadow-md rounded-lg p-6 mb-4 hover:scale-110 focus:outline-none focus:shadow-outline" style={{ width: '200px' }}>
-            <div className="mb-4">
+          <div className="w-full sm:w-1/2 md:w-1/4 p-2">
+            <div className="bg-white shadow-md rounded-lg p-6 transform hover:scale-105 transition-transform">
               <h2 className="text-lg font-semibold text-gray-800 mb-2">Add To Cart</h2>
-              <hr className="border-gray-300" />
-            </div>
-            <div className="flex justify-between items-center">
-              <div className="flex items-center">
-                <span className="mr-2 font-semibold text-gray-700">Add To Cart:</span>
-                <span className="text-gray-700">{addToCart !== null ? addToCart : 'Loading...'}</span>
-              </div>
-              {/* Add more information or actions here */}
+              <hr className="border-gray-300 mb-4" />
+              <div className="text-gray-700 font-bold">Add To Cart: {addToCart !== null ? addToCart : 'Loading...'}</div>
             </div>
           </div>
+        </div>
 
-          <div className="w-10"></div>
-        </div>
-      </div>
-      <div className="flex-grow p-8 pl-40 pr-0 border-solid">
-        <h2 className="text-2xl font-bold mb-5 pl-12">Recent Orders</h2>
-        <div className="w-full overflow-hidden rounded-lg shadow-lg pl-10 pr-10">
-          <table className="w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Order ID</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quantity</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {recentOrders.length > 0 ? (
-                recentOrders.map((order) => (
-                  order.items.slice(-5).map((item, index) => (
-                    <tr key={index} className="transition-all duration-300 ease-in-out hover:bg-gray-100 transform hover:scale-105">
-                      <td className="px-6 py-4 whitespace-nowrap">{order._id}</td>
-                      <td className="px-6 py-4 whitespace-nowrap">{item.name}</td>
-                      <td className="px-6 py-4 whitespace-nowrap">{item.quantity}</td>
-                      <td className="px-6 py-4 whitespace-nowrap">{item.price !== undefined ? item.price : 'N/A'}</td>
-                    </tr>
-                  ))
-                ))
-              ) : (
+        <div className="bg-white p-8 rounded-lg shadow-lg">
+          <h2 className="text-2xl font-bold mb-6">Recent Orders</h2>
+          <div className="overflow-hidden rounded-lg shadow-lg">
+            <table className="w-full divide-y divide-gray-200">
+              <thead className="bg-gray-50">
                 <tr>
-                  <td colSpan="4" className="px-6 py-4 whitespace-nowrap text-center">No recent orders found</td>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Order ID</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quantity</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
                 </tr>
-              )}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {recentOrders.length > 0 ? (
+                  recentOrders.map((order) => (
+                    order.items.slice(-5).map((item, index) => (
+                      <tr key={index} className="transition-all duration-300 ease-in-out hover:bg-gray-100 transform hover:scale-105">
+                        <td className="px-6 py-4 whitespace-nowrap">{order._id}</td>
+                        <td className="px-6 py-4 whitespace-nowrap">{item.name}</td>
+                        <td className="px-6 py-4 whitespace-nowrap">{item.quantity}</td>
+                        <td className="px-6 py-4 whitespace-nowrap">{item.price !== undefined ? item.price : 'N/A'}</td>
+                      </tr>
+                    ))
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="4" className="px-6 py-4 whitespace-nowrap text-center">No recent orders found</td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
