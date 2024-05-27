@@ -247,12 +247,38 @@ const Search = () => {
         fetchListings();
     }, [location.search]);
 
-    const handleChange = (e) => {
-        const { id, value, checked, type } = e.target;
-        setSidebardata((prevData) => ({
-            ...prevData,
-            [id]: type === 'checkbox' ? checked : value,
-        }));
+    // const handleChange = (e) => {
+    //     const { id, value, checked, type } = e.target;
+    //     setSidebardata((prevData) => ({
+    //         ...prevData,
+    //         [id]: type === 'checkbox' ? checked : value,
+    //     }));
+    // };
+        const handleChange = (e) => {
+        if (
+            e.target.id === 'all' ||
+            e.target.id === 'Agroalimentaire' ||
+            e.target.id === 'Beaute' ||
+            e.target.id === 'Artisanat'
+          ) {
+            setSidebardata({ ...sidebardata, type: e.target.id });
+          }
+        if (e.target.id === 'searchTerm') {
+            setSidebardata({ ...sidebardata, searchTerm: e.target.value });
+        } else if (e.target.id === 'offer') {
+            setSidebardata({ ...sidebardata, [e.target.id]: e.target.checked });
+        // } else if (e.target.id === 'sort_order') {
+            // const [sort, order] = e.target.value.split('_');
+            // setSidebardata({ ...sidebardata, sort, order });
+        }else if (e.target.id === 'sort_order') {
+                const sort = e.target.value.split('_')[0] || 'created_at';
+          
+                const order = e.target.value.split('_')[1] || 'desc';
+          
+                setSidebardata({ ...sidebardata, sort, order });
+        } else if (e.target.id === 'all' || e.target.id === 'Beaute' || e.target.id === 'Artisanat' || e.target.id === 'Agroalimentaire') {
+            setSidebardata({ ...sidebardata, type: e.target.id });
+        }
     };
 
     const handleSubmit = (e) => {
