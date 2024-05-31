@@ -3,8 +3,8 @@ import Review from '../models/review.model.js';
 // Controller function to create a new review
 export const createReview = async (req, res, next) => {
   try {
-    const { productId, rating, comment } = req.body;
-    const newReview = new Review({ productId, rating, comment });
+    const { productId, rating, comment , name , avatar } = req.body;
+    const newReview = new Review({ productId, rating, comment, name , avatar });
     const savedReview = await newReview.save();
     res.status(201).json(savedReview);
   } catch (error) {

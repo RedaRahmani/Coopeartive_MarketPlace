@@ -15,7 +15,15 @@ const reviewSchema = new mongoose.Schema({
   comment: {
     type: String,
     required: true
-  }
+  },
+  name:{
+      type: String,
+      required: true,
+  },
+  avatar:{
+    type: String,
+    required: true,
+}
 }, { timestamps: true });
 
 const Review = mongoose.model('Review', reviewSchema);
