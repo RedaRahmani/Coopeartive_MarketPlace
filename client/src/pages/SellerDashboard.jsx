@@ -1,15 +1,18 @@
+
 // import React, { useState, useEffect } from 'react';
 // import { useSelector } from 'react-redux';
 // import { Link } from 'react-router-dom';
 // import { VscAccount } from 'react-icons/vsc';
 // import { MdOutlineContactSupport, MdOutlineNotificationsActive } from 'react-icons/md';
-// import { FaFileInvoiceDollar } from 'react-icons/fa';
+// import { FaFileInvoiceDollar, FaEye, FaShareAlt, FaShoppingCart, FaDollarSign } from 'react-icons/fa';
 // import { BsBoxSeamFill } from 'react-icons/bs';
 // import { LuClipboardList } from 'react-icons/lu';
 // import { IoSettingsOutline } from 'react-icons/io5';
 // import fyler from "./fyler.png";
 // import Calendar from 'react-calendar';
 // import 'react-calendar/dist/Calendar.css';
+// import { MdAttachMoney } from 'react-icons/md';
+// import { FiBox } from 'react-icons/fi';
 
 // const SellerDashboard = () => {
 //   const [views, setViews] = useState(null);
@@ -144,21 +147,31 @@
 //       </aside>
 
 //       <main className="ml-64 flex-grow p-8">
-//         <div className="mb-8">
-//           <img src={fyler} alt="Dashboard" className="w-full max-h-32 rounded-lg shadow-md object-cover" />
+//       <div className="mb-8">
+//           <img src={fyler} alt="Dashboard Image" className="w-full max-h-32 rounded-lg shadow-md" />
 //         </div>
 
 //         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-8">
 //           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 col-span-2">
-//             <InfoCard title="Product Views" value={views} />
-//             <InfoCard title="Product Shares" value={shares} />
-//             <InfoCard title="Total Amount" value={shares} />
-//             <InfoCard title="Add To Cart" value={addToCart} />
+//             <InfoCard title="Product Views" value={views} icon={<FaEye />} />
+//             <InfoCard title="Product Shares" value={shares} icon={<FaShareAlt />} />
+//             <InfoCard title="Total Amount" value={shares} icon={<FaDollarSign />} />
+//             <InfoCard title="Add To Cart" value={addToCart} icon={<FaShoppingCart />} />
 //           </div>
-//           <div className="bg-white p-8 rounded-lg shadow-lg">
-//             <h2 className="text-2xl font-bold mb-6">Calendar</h2>
-//             <Calendar onChange={setDate} value={date} className="calendar-small" />
+//           <div className="flex flex-wrap mb-8">
+//       <div className="w-full p-2">
+//         <div className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-8 rounded-lg shadow-xl">
+//           <h2 className="text-3xl font-bold mb-6 text-white">Calendar</h2>
+//           <div className="bg-white rounded-lg shadow-lg p-4">
+//             <Calendar
+//               onChange={setDate}
+//               value={date}
+//               className="border-none shadow-none"
+//             />
 //           </div>
+//         </div>
+//       </div>
+//     </div>
 //         </div>
 
 //         <OrdersTable recentOrders={recentOrders} />
@@ -167,53 +180,60 @@
 //   );
 // };
 
-// const InfoCard = ({ title, value }) => (
-//   <div className="bg-white shadow-md rounded-lg p-6 transform hover:scale-105 transition-transform">
-//     <h2 className="text-lg font-semibold text-gray-800 mb-2">{title}</h2>
+// const InfoCard = ({ title, value, icon }) => (
+//   <div className="bg-gradient-to-r from-green-400 to-blue-500 shadow-lg rounded-lg p-6 transform hover:scale-105 transition-transform">
+//     <div className="flex items-center mb-2">
+//       <div className="text-white text-2xl mr-3">{icon}</div>
+//       <h2 className="text-lg font-semibold text-white">{title}</h2>
+//     </div>
 //     <hr className="border-gray-300 mb-4" />
-//     <div className="text-gray-700 font-bold">{value !== null ? value : 'Loading...'}</div>
+//     <div className="text-white font-bold text-2xl">{value !== null ? value : 'Loading...'}</div>
 //   </div>
 // );
 
-// const OrdersTable = ({ recentOrders }) => (
+// const OrdersTable = ({ recentOrders, isLoading }) => (
 //   <div className="flex flex-wrap mb-8">
-//           <div className="w-full p-2">
-//             <div className="bg-white p-8 rounded-lg shadow-lg">
-//               <h2 className="text-2xl font-bold mb-6">Recent Orders</h2>
-//               <div className="overflow-hidden rounded-lg shadow-lg">
-//                 <table className="w-full divide-y divide-gray-200">
-//                   <thead className="bg-gray-50">
-//                     <tr>
-//                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Order ID</th>
-//                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product</th>
-//                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quantity</th>
-//                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
-//                     </tr>
-//                   </thead>
-//                   <tbody className="bg-white divide-y divide-gray-200">
-//                     {recentOrders.length > 0 ? (
-//                       recentOrders.map((order) => (
-//                         order.items.slice(-5).map((item, index) => (
-//                           <tr key={index} className="transition-all duration-300 ease-in-out hover:bg-gray-100 transform hover:scale-105">
-//                             <td className="px-6 py-4 whitespace-nowrap">{order._id}</td>
-//                             <td className="px-6 py-4 whitespace-nowrap">{item.name}</td>
-//                             <td className="px-6 py-4 whitespace-nowrap">{item.quantity}</td>
-//                             <td className="px-6 py-4 whitespace-nowrap">{item.price !== undefined ? item.price : 'N/A'}</td>
-//                           </tr>
-//                         ))
-//                       ))
-//                     ) : (
-//                       <tr>
-//                         <td colSpan="4" className="px-6 py-4 whitespace-nowrap text-center">No recent orders found</td>
-//                       </tr>
-//                     )}
-//                   </tbody>
-//                 </table>
-//               </div>
-//             </div>
-//           </div>
+//     <div className="w-full p-2">
+//       <div className="bg-white p-8 rounded-lg shadow-lg">
+//         <div className="flex items-center mb-6">
+//           <FaShoppingCart className="text-3xl text-green-600 mr-2" />
+//           <h2 className="text-3xl font-bold text-gray-800">Recent Orders</h2>
 //         </div>
+//         {isLoading ? (
+//           <div className="text-center text-gray-500">Loading...</div>
+//         ) : (
+//           <div className="grid grid-cols-1 gap-6">
+//             {recentOrders.length > 0 ? (
+//               recentOrders.map((order) =>
+//                 order.items.slice(-5).map((item, index) => (
+//                   <div key={index} className="bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg p-6 shadow-md transition-transform transform hover:scale-105">
+//                     <div className="flex justify-between mb-4">
+//                       <div className="text-sm text-blue-700">
+//                         <FiBox className="inline text-blue-500 mr-1" />
+//                         Order ID: <span className="font-medium text-blue-900">{order._id}</span>
+//                       </div>
+//                       <div className="text-sm text-blue-700">
+//                         <MdAttachMoney className="inline text-blue-500 mr-1" />
+//                         Price: <span className="font-medium text-blue-900">{item.price !== undefined ? `$${item.price}` : 'N/A'}</span>
+//                       </div>
+//                     </div>
+//                     <div className="text-lg font-bold text-blue-800 mb-2">{item.name}</div>
+//                     <div className="text-sm text-blue-700">
+//                       Quantity: <span className="font-medium text-blue-900">{item.quantity}</span>
+//                     </div>
+//                   </div>
+//                 ))
+//               )
+//             ) : (
+//               <div className="text-center text-gray-500">No recent orders found</div>
+//             )}
+//           </div>
+//         )}
+//       </div>
+//     </div>
+//   </div>
 // );
+
 
 // export default SellerDashboard;
 
@@ -229,6 +249,8 @@ import { IoSettingsOutline } from 'react-icons/io5';
 import fyler from "./fyler.png";
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+import { MdAttachMoney } from 'react-icons/md';
+import { FiBox } from 'react-icons/fi';
 
 const SellerDashboard = () => {
   const [views, setViews] = useState(null);
@@ -243,9 +265,7 @@ const SellerDashboard = () => {
       try {
         const res = await fetch(`/api/orders/getorder?userRef=${currentUser._id}`, {
           method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: { 'Content-Type': 'application/json' }
         });
         const data = await res.json();
         setRecentOrders(data.orders);
@@ -264,9 +284,7 @@ const SellerDashboard = () => {
       try {
         const res = await fetch(`/api/listing/productviewed?id=${currentUser._id}`, {
           method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: { 'Content-Type': 'application/json' }
         });
         const data = await res.json();
         setViews(data.views);
@@ -286,9 +304,7 @@ const SellerDashboard = () => {
         try {
           const res = await fetch(`/api/listing/addtocart?id=${currentUser._id}`, {
             method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-            },
+            headers: { 'Content-Type': 'application/json' }
           });
           const data = await res.json();
           setAddToCart(data.addToCart);
@@ -307,9 +323,7 @@ const SellerDashboard = () => {
         try {
           const res = await fetch(`/api/listing/productshared?id=${currentUser._id}`, {
             method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-            },
+            headers: { 'Content-Type': 'application/json' }
           });
           const data = await res.json();
           setShares(data.shares);
@@ -363,7 +377,7 @@ const SellerDashboard = () => {
       </aside>
 
       <main className="ml-64 flex-grow p-8">
-      <div className="mb-8">
+        <div className="mb-8">
           <img src={fyler} alt="Dashboard Image" className="w-full max-h-32 rounded-lg shadow-md" />
         </div>
 
@@ -374,9 +388,15 @@ const SellerDashboard = () => {
             <InfoCard title="Total Amount" value={shares} icon={<FaDollarSign />} />
             <InfoCard title="Add To Cart" value={addToCart} icon={<FaShoppingCart />} />
           </div>
-          <div className="bg-white p-8 rounded-lg shadow-lg">
-            <h2 className="text-2xl font-bold mb-6">Calendar</h2>
-            <Calendar onChange={setDate} value={date} className="calendar-small" />
+          <div className="flex flex-wrap mb-8">
+            <div className="w-full p-2">
+              <div className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-8 rounded-lg shadow-xl">
+                <h2 className="text-3xl font-bold mb-6 text-white">Calendar</h2>
+                <div className="bg-white rounded-lg shadow-lg p-4">
+                  <Calendar onChange={setDate} value={date} className="border-none shadow-none" />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -397,45 +417,47 @@ const InfoCard = ({ title, value, icon }) => (
   </div>
 );
 
-const OrdersTable = ({ recentOrders }) => (
+const OrdersTable = ({ recentOrders, isLoading }) => (
   <div className="flex flex-wrap mb-8">
     <div className="w-full p-2">
       <div className="bg-white p-8 rounded-lg shadow-lg">
-        <h2 className="text-2xl font-bold mb-6">Recent Orders</h2>
-        <div className="overflow-hidden rounded-lg shadow-lg">
-          <table className="w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Order ID</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quantity</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {recentOrders.length > 0 ? (
-                recentOrders.map((order) =>
-                  order.items.slice(-5).map((item, index) => (
-                    <tr key={index} className="transition-all duration-300 ease-in-out hover:bg-gray-100 transform hover:scale-105">
-                      <td className="px-6 py-4 whitespace-nowrap">{order._id}</td>
-                      <td className="px-6 py-4 whitespace-nowrap">{item.name}</td>
-                      <td className="px-6 py-4 whitespace-nowrap">{item.quantity}</td>
-                      <td className="px-6 py-4 whitespace-nowrap">{item.price !== undefined ? item.price : 'N/A'}</td>
-                    </tr>
-                  ))
-                )
-              ) : (
-                <tr>
-                  <td colSpan="4" className="px-6 py-4 whitespace-nowrap text-center">No recent orders found</td>
-                </tr>
-              )}
-            </tbody>
-          </table>
+        <div className="flex items-center mb-6">
+          <FaShoppingCart className="text-3xl text-green-600 mr-2" />
+          <h2 className="text-3xl font-bold text-gray-800">Recent Orders</h2>
         </div>
+        {isLoading ? (
+          <div className="text-center text-gray-500">Loading...</div>
+        ) : (
+          <div className="grid grid-cols-1 gap-6">
+            {recentOrders.length > 0 ? (
+              recentOrders.map((order) =>
+                order.items.slice(-5).map((item, index) => (
+                  <div key={index} className="bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg p-6 shadow-md transition-transform transform hover:scale-105">
+                    <div className="flex justify-between mb-4">
+                      <div className="text-sm text-blue-700">
+                        <FiBox className="inline text-blue-500 mr-1" />
+                        Order ID: <span className="font-medium text-blue-900">{order._id}</span>
+                      </div>
+                      <div className="text-sm text-blue-700">
+                        <MdAttachMoney className="inline text-blue-500 mr-1" />
+                        Price: <span className="font-medium text-blue-900">{item.price !== undefined ? `$${item.price}` : 'N/A'}</span>
+                      </div>
+                    </div>
+                    <div className="text-lg font-bold text-blue-800 mb-2">{item.name}</div>
+                    <div className="text-sm text-blue-700">
+                      Quantity: <span className="font-medium text-blue-900">{item.quantity}</span>
+                    </div>
+                  </div>
+                ))
+              )
+            ) : (
+              <div className="text-center text-gray-500">No recent orders found</div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   </div>
 );
 
 export default SellerDashboard;
-
