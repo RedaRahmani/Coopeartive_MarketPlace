@@ -143,6 +143,47 @@ export const getViewed = async (req, res) => {
     res.status(500).json({ success: false, message: 'Internal Server Error' });
   }
 };
+export const getViewedByProduct = async (req, res) => {
+  try {
+    const { id } = req.query;
+    if (!id) {
+      return res.status(400).json({ success: false, message: 'Missing id parameter' });
+    }
+    // Use the id parameter in your logic
+    // Find the listing by ID
+    const listing = await Listing.findById(id);
+
+    if (!listing) {
+      return res.status(404).json({ success: false, message: 'Listing not found' });
+    }
+
+    res.json({ success: true, views: listing.viewed });
+  } catch (error) {
+    console.error('Error fetching views:', error);
+    res.status(500).json({ success: false, message: 'Internal Server Error' });
+  }
+};
+
+export const getSharedByProduct = async (req, res) => {
+  try {
+    const { id } = req.query;
+    if (!id) {
+      return res.status(400).json({ success: false, message: 'Missing id parameter' });
+    }
+    // Use the id parameter in your logic
+    // Find the listing by ID
+    const listing = await Listing.findById(id);
+
+    if (!listing) {
+      return res.status(404).json({ success: false, message: 'Listing not found' });
+    }
+
+    res.json({ success: true, shares: listing.shares });
+  } catch (error) {
+    console.error('Error fetching views:', error);
+    res.status(500).json({ success: false, message: 'Internal Server Error' });
+  }
+};
 
 export const getShared = async (req, res) => {
   try {

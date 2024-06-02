@@ -124,7 +124,7 @@ const SellerDashboard = () => {
               <FaFileInvoiceDollar className="mr-3 h-6 w-6" />
               <span className="text-lg">Transactions</span>
             </Link>
-            <Link to="/support" className="flex items-center mb-4 p-2 rounded hover:bg-gray-700 transition-colors">
+            <Link to="/Contact" className="flex items-center mb-4 p-2 rounded hover:bg-gray-700 transition-colors">
               <MdOutlineContactSupport className="mr-3 h-6 w-6" />
               <span className="text-lg">Support</span>
             </Link>

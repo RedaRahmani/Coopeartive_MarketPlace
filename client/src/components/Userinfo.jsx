@@ -34,7 +34,7 @@ export function LeftMenu  () {
             <FaFileInvoiceDollar className="mr-3 h-6 w-6" />
             <span className="text-lg">Transactions</span>
           </Link>
-          <Link to="/support" className="mb-4 flex items-center p-2 rounded hover:bg-gray-700 transition-colors">
+          <Link to="/contact" className="mb-4 flex items-center p-2 rounded hover:bg-gray-700 transition-colors">
             <MdOutlineContactSupport className="mr-3 h-6 w-6" />
             <span className="text-lg">Support</span>
           </Link>

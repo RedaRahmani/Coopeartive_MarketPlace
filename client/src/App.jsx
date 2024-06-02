@@ -4,6 +4,7 @@ import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import Profile from './pages/Profile';
 import About from './pages/About';
+import Contact from './pages/Contact';
 import SellerDashboard from './pages/SellerDashboard';
 import Product from './pages/Product';
 import Header from './components/Header';
@@ -48,6 +49,7 @@ export default function App() {
       <Route path='/sign-in' element={<SignIn/>} />
       <Route path='/sign-up' element ={<SignUp/> }/>
       <Route path='/about' element={<About/>} />
+      <Route path='/Contact' element={<Contact/>} />
       <Route path='/search' element={<Search />} />
       <Route path='/listing/:listingId' element={<Listing/>} />
       <Route path='/thankyou' element={<Thankyou/>} />

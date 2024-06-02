@@ -9,7 +9,7 @@ import { BiCategoryAlt } from "react-icons/bi";
 import AddToCartButton from '../components/cartItems.jsx';
 import ReviewForm from '../components/ReviewForm.jsx';
 import Header from '../components/Header.jsx';
-
+import { FaFileInvoiceDollar, FaEye, FaShareAlt, FaShoppingCart, FaDollarSign } from 'react-icons/fa';
 import 'swiper/css/bundle';
 import { FaShare } from 'react-icons/fa';
 import Contact from '../components/Contact';
@@ -22,6 +22,8 @@ export default function Listing() {
   const [error, setError] = useState(false);
   const [copied, setCopied] = useState(false);
   const [contact, setContact] = useState(false);
+  const [views, setViews] = useState(null);
+  const [shares, setShares] = useState(null);
   const params = useParams();
   const { currentUser } = useSelector((state) => state.user);
 
@@ -42,6 +44,44 @@ export default function Listing() {
 
     incrementViewed();
   }, [params.listingId]);
+
+  useEffect(() => {
+    const fetchViews = async () => {
+      try {
+        const res = await fetch(`/api/listing/viewedByProduct?id=${params.listingId}`, {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' }
+        });
+        const data = await res.json();
+        setViews(data.views);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    if (currentUser) {
+      fetchViews();
+    }
+  }, [currentUser]);
+
+  useEffect(() => {
+    const fetchShares = async () => {
+      try {
+        const res = await fetch(`/api/listing/getproductshared?id=${params.listingId}`, {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' }
+        });
+        const data = await res.json();
+        setShares(data.shares);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    if (currentUser) {
+      fetchShares();
+    }
+  }, [currentUser]);
 
   useEffect(() => {
     const fetchListing = async () => {
@@ -156,6 +196,10 @@ export default function Listing() {
                       : `${listing.quantity} Quantity`}
                   </li>
                 </ul>
+                <div className="flex flex-wrap justify-between items-center mb-8 space-x-2">
+          <InfoCard title="Product Views" value={views} icon={<FaEye />} />
+          <InfoCard title="Product Shares" value={shares} icon={<FaShareAlt />} />
+        </div>
                 <div className="mt-6">
                   <ReviewForm />
                 </div>
@@ -176,3 +220,13 @@ export default function Listing() {
     </>
   );
 }
+const InfoCard = ({ title, value, icon }) => (
+  <div className="flex-grow bg-gradient-to-r from-blue-50 to-blue-200 shadow-lg rounded-lg p-4 transform hover:scale-105 transition-transform">
+    <div className="flex items-center mb-2">
+      <div className="text-gray-600 text-2xl mr-3">{icon}</div>
+      <h2 className="text-lg font-semibold text-blue-900">{title}</h2>
+    </div>
+    <hr className="border-gray-300 mb-4" />
+    <div className="text-blue-500 font-bold text-2xl">{value !== null ? value : 'Loading...'}</div>
+  </div>
+);
