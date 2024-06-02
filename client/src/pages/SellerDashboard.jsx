@@ -156,23 +156,25 @@ const SellerDashboard = () => {
           <div className="w-2/3 p-2">
             <OrdersTable recentOrders={recentOrders} />
           </div>
-          <div className="w-1/3 p-2">
-            <div className="bg-white rounded-lg shadow-lg p-16">
-              <div className="flex justify-center mb-4">
-                <div className="flex text-xl font-bold text-gray-800">
-                <FiClock className="mr-2 text-3xl" />
-                  {date.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric'})}
-                </div>
-              </div>
-              
-            </div>
-            <Calendar
-                onChange={setDate}
-                value={date}
-                className="border-none shadow-none justify-center p-5"
-              />
-          </div>
-        </div>
+          <div className="w-full md:w-1/2 lg:w-1/3 p-2">
+  <div className="bg-white rounded-lg shadow-lg p-6 md:p-16">
+    <div className="flex justify-center mb-4">
+      <div className="flex text-xl font-bold text-gray-800 items-center">
+        <FiClock className="mr-2 text-3xl" />
+        <span className="hidden md:block">
+          {date.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric'})}
+        </span>
+      </div>
+    </div>
+    <Calendar
+      onChange={setDate}
+      value={date}
+      className="border-none shadow-none justify-center p-5"
+    />
+  </div>
+  </div>
+</div>
+
       </main>
     </div>
   );
