@@ -52,7 +52,7 @@ const CartList = () => {
 
     const calculateTotal = () => {
         return cartItems.reduce((total, item) => {
-            return total + item.regularPrice * item.quantity;
+            return total + item.discountPrice * item.quantity;
         }, 0).toFixed(2);
     };
 
@@ -125,7 +125,7 @@ const CartList = () => {
                                                 <div>
                                                     <div className="text-gray-700 font-semibold">{cartItem.name}</div>
                                                     <div className="text-gray-500">Quantity: {cartItem.quantity}</div>
-                                                    <div className="text-gray-500">Price: ${cartItem.regularPrice.toFixed(2)}</div>
+                                                    <div className="text-gray-500">Price: ${cartItem.discountPrice.toFixed(2)}</div>
                                                 </div>
                                             </div>
                                             <button onClick={() => removeFromCart(cartItem.productId)} className="text-red-500 hover:text-red-700 transition duration-200 ease-in-out">Remove</button>

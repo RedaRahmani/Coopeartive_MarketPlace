@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { FaShoppingCart } from 'react-icons/fa';
+
 
 const AddToCartButton = () => {
     const [quantity, setQuantity] = useState(1);
@@ -37,8 +39,6 @@ const AddToCartButton = () => {
             console.log('User updated addToCart:', userResponse.data);
             const response = await axios.post('/api/cart/add', cartItem);
             console.log('Item added to cart:', response.data);
-
-            // If the item was successfully added to cart, proceed to create orders
             if (!error) {
                 await createOrder(cartItem.sellerId, cartItem);
             }
@@ -64,20 +64,8 @@ const AddToCartButton = () => {
         }
     };
     return (
-        // <div>
-        //     <label>Quantitie:</label>
-        //     <input
-        //         type="number"
-        //         value={quantity}
-        //         onChange={(e) => setQuantity(e.target.value)}
-        //         className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-        //     />
-        //     <button onClick={handleAddToCart} 
-        //     className='bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded'
-        //     >Add to Cart</button>
-        // </div>
-        <div className='p-4  rounded-md inline-block'>
-    <label className='block text-gray-700 text-sm font-semibold mb-1'>Quantity:</label>
+        <div className='flex items-center p-4 rounded-md'>
+    <label className='block text-gray-700 text-sm font-semibold mb-1 mr-2'>Quantity:</label>
     <input
         type="number"
         value={quantity}
@@ -86,8 +74,9 @@ const AddToCartButton = () => {
     />
     <button 
         onClick={handleAddToCart} 
-        className='ml-2 bg-green-500 hover:bg-green-700 text-white font-semibold py-1 px-3 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 transition duration-150 ease-in-out'
+        className='ml-2 bg-green-500 hover:bg-green-700 text-white font-semibold py-1 px-3 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 transition duration-150 ease-in-out flex items-center'
     >
+        <FaShoppingCart className='mr-1' />
         Add to Cart
     </button>
 </div>
