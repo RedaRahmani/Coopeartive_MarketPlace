@@ -8,46 +8,73 @@ import { MdOutlineNotificationsActive } from "react-icons/md";
 import { FaFileInvoiceDollar } from "react-icons/fa6";
 import { BsBoxSeamFill } from "react-icons/bs";
 import { LuClipboardList } from "react-icons/lu";
+import { updateUserStart, updateUserFailure, updateUserSuccess, deleteUserFailure, deleteUserSuccess, signOutUserStart } from '../redux/user/userSlice';
 import { IoSettingsOutline } from "react-icons/io5";
 import {Link} from 'react-router-dom'
+import { useDispatch } from 'react-redux';
+import { FiLogOut } from 'react-icons/fi';
 
 export function LeftMenu  () {
+    const dispatch = useDispatch();
+    const handleSignOut = async () => {
+        try {
+          dispatch(signOutUserStart());
+          const res = await fetch('/api/auth/signout');
+          const data = await res.json();
+          if (data.success === false) {
+            dispatch(deleteUserFailure(data.message));
+            return;
+          }
+          dispatch(deleteUserSuccess(data));
+        } catch (error) {
+          dispatch(deleteUserFailure(error.message));
+        }
+      };
     return (
-        <div className="fixed left-0 top-0 h-full w-64 bg-gradient-to-b from-gray-800 to-gray-600 text-white shadow-md">
-        <div className="p-6">
-          <Link to="/sellerdashboard" className="mb-4 flex items-center p-2 rounded hover:bg-gray-700 transition-colors">
-            <span className="text-2xl font-bold">Seller Dashboard</span>
-          </Link>
-          <Link to="/profile" className="mb-4 flex items-center p-2 rounded hover:bg-gray-700 transition-colors">
-            <VscAccount className="mr-3 h-6 w-6" />
-            <span className="text-lg">Account</span>
-          </Link>
-          <Link to="/Product" className="mb-4 flex items-center p-2 rounded hover:bg-gray-700 transition-colors">
-            <BsBoxSeamFill className="mr-3 h-6 w-6" />
-            <span className="text-lg">Products</span>
-          </Link>
-          <Link to="/orders" className="mb-4 flex items-center p-2 rounded hover:bg-gray-700 transition-colors">
-            <LuClipboardList className="mr-3 h-6 w-6" />
-            <span className="text-lg">My Orders</span>
-          </Link>
-          <Link to="/transactions" className="mb-4 flex items-center p-2 rounded hover:bg-gray-700 transition-colors">
-            <FaFileInvoiceDollar className="mr-3 h-6 w-6" />
-            <span className="text-lg">Transactions</span>
-          </Link>
-          <Link to="/contact" className="mb-4 flex items-center p-2 rounded hover:bg-gray-700 transition-colors">
-            <MdOutlineContactSupport className="mr-3 h-6 w-6" />
-            <span className="text-lg">Support</span>
-          </Link>
-          <Link to="/notifications" className="mb-4 flex items-center p-2 rounded hover:bg-gray-700 transition-colors">
-            <MdOutlineNotificationsActive className="mr-3 h-6 w-6" />
-            <span className="text-lg">Notifications</span>
-          </Link>
-          <Link to="/settings" className="mb-4 flex items-center p-2 rounded hover:bg-gray-700 transition-colors">
-            <IoSettingsOutline className="mr-3 h-6 w-6" />
-            <span className="text-lg">Settings</span>
-          </Link>
-        </div>
-      </div>
+        <aside className="fixed left-0 top-0 h-full w-64 bg-gradient-to-b from-gray-800 to-gray-600 text-white shadow-md flex flex-col">
+  <div className="p-6 flex-grow">
+    <Link to="/sellerdashboard" className="mb-6 block text-2xl font-bold">
+      Seller Dashboard
+    </Link>
+    <nav className="flex flex-col h-full">
+      <Link to="/profile" className="flex items-center mb-4 p-2 rounded hover:bg-gray-700 transition-colors">
+        <VscAccount className="mr-3 h-6 w-6" />
+        <span className="text-lg">Account</span>
+      </Link>
+      <Link to="/Product" className="flex items-center mb-4 p-2 rounded hover:bg-gray-700 transition-colors">
+        <BsBoxSeamFill className="mr-3 h-6 w-6" />
+        <span className="text-lg">Products</span>
+      </Link>
+      <Link to="/orders" className="flex items-center mb-4 p-2 rounded hover:bg-gray-700 transition-colors">
+        <LuClipboardList className="mr-3 h-6 w-6" />
+        <span className="text-lg">My Orders</span>
+      </Link>
+      <Link to="/transactions" className="flex items-center mb-4 p-2 rounded hover:bg-gray-700 transition-colors">
+        <FaFileInvoiceDollar className="mr-3 h-6 w-6" />
+        <span className="text-lg">Transactions</span>
+      </Link>
+      <Link to="/Contact" className="flex items-center mb-4 p-2 rounded hover:bg-gray-700 transition-colors">
+        <MdOutlineContactSupport className="mr-3 h-6 w-6" />
+        <span className="text-lg">Support</span>
+      </Link>
+      <Link to="/notifications" className="flex items-center mb-4 p-2 rounded hover:bg-gray-700 transition-colors">
+        <MdOutlineNotificationsActive className="mr-3 h-6 w-6" />
+        <span className="text-lg">Notifications</span>
+      </Link>
+      <Link to="/settings" className="flex items-center mb-4 p-2 rounded hover:bg-gray-700 transition-colors">
+        <IoSettingsOutline className="mr-3 h-6 w-6" />
+        <span className="text-lg">Settings</span>
+      </Link>
+      <div className="flex-grow"></div> {/* This div will take up the remaining space */}
+      <Link to="/sign-in" onClick={handleSignOut} className="flex items-center mb-10 p-2 rounded hover:bg-gray-700 transition-colors">
+      <FiLogOut className="mr-3 h-6 w-6" />
+        <span className="text-lg">Sign out</span>
+      </Link>
+      
+    </nav>
+  </div>
+</aside>
+
     );
 };
 

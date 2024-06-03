@@ -8,6 +8,7 @@ import { BsBoxSeamFill } from 'react-icons/bs';
 import { LuClipboardList } from 'react-icons/lu';
 import { IoSettingsOutline } from 'react-icons/io5';
 import { FiBox , FiClock } from 'react-icons/fi';
+import { LeftMenu } from '../components/Userinfo';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './customCalendar.css'; // Import the custom CSS file
@@ -102,7 +103,7 @@ const SellerDashboard = () => {
 
   return (
     <div className="flex h-screen">
-      <aside className="fixed left-0 top-0 h-full w-64 bg-gradient-to-b from-gray-800 to-gray-600 text-white shadow-md">
+      {/* <aside className="fixed left-0 top-0 h-full w-64 bg-gradient-to-b from-gray-800 to-gray-600 text-white shadow-md">
         <div className="p-6">
           <Link to="/sellerdashboard" className="mb-6 block text-2xl font-bold">
             Seller Dashboard
@@ -138,7 +139,8 @@ const SellerDashboard = () => {
             </Link>
           </nav>
         </div>
-      </aside>
+      </aside> */}
+      <LeftMenu />
 
       <main className="ml-64 flex-grow p-8">
         <div className="mb-8">
