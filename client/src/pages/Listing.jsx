@@ -236,7 +236,6 @@
 //   </div>
 // );
 
-
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -388,7 +387,7 @@ export default function Listing() {
                       </SwiperSlide>
                     ))}
                   </Swiper>
-                  <div className="absolute top-4 right-4 flex flex-col items-center space-y-2">
+                  <div className="absolute top-4 right-4 flex flex-col items-center space-y-2 z-10">
                     <div className="flex items-center space-x-1 text-white bg-gray-800 px-2 py-1 rounded-md">
                       <FaEye className="text-xl" />
                       <span>{views !== null ? views : '...'}</span>
@@ -397,14 +396,16 @@ export default function Listing() {
                       <FaShareAlt className="text-xl" />
                       <span>{shares !== null ? shares : '...'}</span>
                     </div>
-                    <div className="border rounded-full w-12 h-12 flex justify-center items-center bg-white shadow-lg cursor-pointer">
-                      <FaShare
-                        className="text-gray-500"
-                        onClick={handleShareButtonClick}
-                      />
-                    </div>
+                    
                   </div>
+                  <div className="fixed top-16 right-4 z-10 border rounded-full w-12 h-12 flex justify-center items-center bg-white shadow-lg cursor-pointer">
+                     <FaShare
+                       className="text-gray-500"
+                       onClick={handleShareButtonClick}
+                     />
+                   </div>
                   {copied && (
+                    
                     <p className="fixed top-24 right-6 z-10 rounded-md bg-white p-2 shadow-lg">
                       Link copied!
                     </p>
