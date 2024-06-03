@@ -49,28 +49,16 @@ export function LeftMenu  () {
         <LuClipboardList className="mr-3 h-6 w-6" />
         <span className="text-lg">My Orders</span>
       </Link>
-      <Link to="/transactions" className="flex items-center mb-4 p-2 rounded hover:bg-gray-700 transition-colors">
-        <FaFileInvoiceDollar className="mr-3 h-6 w-6" />
-        <span className="text-lg">Transactions</span>
-      </Link>
+
       <Link to="/Contact" className="flex items-center mb-4 p-2 rounded hover:bg-gray-700 transition-colors">
         <MdOutlineContactSupport className="mr-3 h-6 w-6" />
         <span className="text-lg">Support</span>
-      </Link>
-      <Link to="/notifications" className="flex items-center mb-4 p-2 rounded hover:bg-gray-700 transition-colors">
-        <MdOutlineNotificationsActive className="mr-3 h-6 w-6" />
-        <span className="text-lg">Notifications</span>
-      </Link>
-      <Link to="/settings" className="flex items-center mb-4 p-2 rounded hover:bg-gray-700 transition-colors">
-        <IoSettingsOutline className="mr-3 h-6 w-6" />
-        <span className="text-lg">Settings</span>
       </Link>
       <div className="flex-grow"></div> {/* This div will take up the remaining space */}
       <Link to="/sign-in" onClick={handleSignOut} className="flex items-center mb-10 p-2 rounded hover:bg-gray-700 transition-colors">
       <FiLogOut className="mr-3 h-6 w-6" />
         <span className="text-lg">Sign out</span>
       </Link>
-      
     </nav>
   </div>
 </aside>
