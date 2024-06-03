@@ -131,7 +131,7 @@ export const checkoutSession = async (req, res) => {
         currency: 'mad',
         product_data: {
           name: item.name,
-          description: 'Product Description',
+          images: [item.imageUrls[0]],
         },
         unit_amount: item.regularPrice * 100, // Price in cents
       },
