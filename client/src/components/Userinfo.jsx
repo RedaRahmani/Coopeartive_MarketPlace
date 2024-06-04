@@ -13,6 +13,7 @@ import { IoSettingsOutline } from "react-icons/io5";
 import {Link} from 'react-router-dom'
 import { useDispatch } from 'react-redux';
 import { FiLogOut } from 'react-icons/fi';
+import lune from './laLune.jpeg'
 
 export function LeftMenu  () {
     const dispatch = useDispatch();
@@ -32,7 +33,12 @@ export function LeftMenu  () {
       };
     return (
         <aside className="fixed left-0 top-0 h-full w-64 bg-gradient-to-b from-gray-800 to-gray-600 text-white shadow-md flex flex-col">
-  <div className="p-6 flex-grow">
+  <div className="p-6 flex-grow"
+   style={{
+    backgroundImage: `url(${lune})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+  }}>
     <Link to="/sellerdashboard" className="mb-6 block text-2xl font-bold">
       Seller Dashboard
     </Link>

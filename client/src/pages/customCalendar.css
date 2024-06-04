@@ -2,6 +2,7 @@
 
 /* Calendar container */
 .react-calendar {
+  
     background: linear-gradient(to right, #ebf8ff, #bee3f8);
     border: none;
     border-radius: 0.5rem;

@@ -13,6 +13,9 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './customCalendar.css'; // Import the custom CSS file
 import fyler from "./fyler.png";
+import eclipse from "./eclipse.jpeg"
+import aurore from "./aurore.jpeg"
+
 
 const SellerDashboard = () => {
   const [views, setViews] = useState(null);
@@ -103,63 +106,32 @@ const SellerDashboard = () => {
 
   return (
     <div className="flex h-screen">
-      {/* <aside className="fixed left-0 top-0 h-full w-64 bg-gradient-to-b from-gray-800 to-gray-600 text-white shadow-md">
-        <div className="p-6">
-          <Link to="/sellerdashboard" className="mb-6 block text-2xl font-bold">
-            Seller Dashboard
-          </Link>
-          <nav>
-            <Link to="/profile" className="flex items-center mb-4 p-2 rounded hover:bg-gray-700 transition-colors">
-              <VscAccount className="mr-3 h-6 w-6" />
-              <span className="text-lg">Account</span>
-            </Link>
-            <Link to="/Product" className="flex items-center mb-4 p-2 rounded hover:bg-gray-700 transition-colors">
-              <BsBoxSeamFill className="mr-3 h-6 w-6" />
-              <span className="text-lg">Products</span>
-            </Link>
-            <Link to="/orders" className="flex items-center mb-4 p-2 rounded hover:bg-gray-700 transition-colors">
-              <LuClipboardList className="mr-3 h-6 w-6" />
-              <span className="text-lg">My Orders</span>
-            </Link>
-            <Link to="/transactions" className="flex items-center mb-4 p-2 rounded hover:bg-gray-700 transition-colors">
-              <FaFileInvoiceDollar className="mr-3 h-6 w-6" />
-              <span className="text-lg">Transactions</span>
-            </Link>
-            <Link to="/Contact" className="flex items-center mb-4 p-2 rounded hover:bg-gray-700 transition-colors">
-              <MdOutlineContactSupport className="mr-3 h-6 w-6" />
-              <span className="text-lg">Support</span>
-            </Link>
-            <Link to="/notifications" className="flex items-center mb-4 p-2 rounded hover:bg-gray-700 transition-colors">
-              <MdOutlineNotificationsActive className="mr-3 h-6 w-6" />
-              <span className="text-lg">Notifications</span>
-            </Link>
-            <Link to="/settings" className="flex items-center mb-4 p-2 rounded hover:bg-gray-700 transition-colors">
-              <IoSettingsOutline className="mr-3 h-6 w-6" />
-              <span className="text-lg">Settings</span>
-            </Link>
-          </nav>
-        </div>
-      </aside> */}
       <LeftMenu />
 
       <main className="ml-64 flex-grow p-8">
-        <div className="mb-8">
-          <img src={fyler} alt="Dashboard Image" className="w-full max-h-32 rounded-lg shadow-md" />
-        </div>
-
+        {/* <div className="mb-8">
+          <img src={fyler} alt="Dashboard Image" className="w-full max-h-16 rounded-lg shadow-md" />
+        </div> */}
+{/* 
         <div className="flex flex-wrap justify-between items-center mb-8 space-x-2">
           <InfoCard title="Product Views" value={views} icon={<FaEye />} />
           <InfoCard title="Product Shares" value={shares} icon={<FaShareAlt />} />
           <InfoCard title="Total Amount" value={totalAmount} icon={<FaDollarSign />} />
           <InfoCard title="Add To Cart" value={addToCart} icon={<FaShoppingCart />} />
+        </div> */}
+  <div className="flex flex-wrap justify-between items-center mb-8 space-x-2">
+          <InfoCard title="Product Views" value={views} icon={<FaEye />} backgroundImage={eclipse} />
+          <InfoCard title="Product Shares" value={shares} icon={<FaShareAlt />} backgroundImage={eclipse} />
+          <InfoCard title="Total Amount" value={totalAmount} icon={<FaDollarSign />} backgroundImage={eclipse} />
+          <InfoCard title="Add To Cart" value={addToCart} icon={<FaShoppingCart />} backgroundImage={eclipse} />
         </div>
-
         <div className="flex space-x-4">
-          <div className="w-2/3 p-2">
+          <div className="w-2/3 p-2"
+          >
             <OrdersTable recentOrders={recentOrders} />
           </div>
-          <div className="w-full md:w-1/2 lg:w-1/3 p-2">
-  <div className="bg-white rounded-lg shadow-lg p-6 md:p-16">
+          <div className="w-full md:w-1/2 lg:w-1/3 p-0">
+  <div className="bg-white rounded-lg shadow-lg p-1 md:p-13">
     <div className="flex justify-center mb-4">
       <div className="flex text-xl font-bold text-gray-800 items-center">
         <FiClock className="mr-2 text-3xl" />
@@ -171,7 +143,12 @@ const SellerDashboard = () => {
     <Calendar
       onChange={setDate}
       value={date}
-      className="border-none shadow-none justify-center p-5"
+      className="border-none shadow-none justify-center p-1"
+      style={{
+        backgroundImage: `url(${eclipse})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
     />
   </div>
   </div>
@@ -182,24 +159,47 @@ const SellerDashboard = () => {
   );
 };
 
-const InfoCard = ({ title, value, icon }) => (
-  <div className="flex-grow bg-gradient-to-r from-blue-50 to-blue-200 shadow-lg rounded-lg p-4 transform hover:scale-105 transition-transform">
+// const InfoCard = ({ title, value, icon }) => (
+//   <div className="flex-grow bg-gradient-to-r from-blue-50 to-blue-200 shadow-lg rounded-lg p-4 transform hover:scale-105 transition-transform">
+//     <div className="flex items-center mb-2">
+//       <div className="text-gray-600 text-2xl mr-3">{icon}</div>
+//       <h2 className="text-lg font-semibold text-blue-900">{title}</h2>
+//     </div>
+//     <hr className="border-gray-300 mb-4" />
+//     <div className="text-blue-500 font-bold text-2xl">{value !== null ? value : 'Loading...'}</div>
+//   </div>
+// );
+const InfoCard = ({ title, value, icon, backgroundImage }) => (
+  <div 
+    className="flex-grow shadow-lg rounded-lg p-10 transform hover:scale-105 transition-transform"
+    style={{
+      backgroundImage: `url(${backgroundImage})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+    }}
+  >
     <div className="flex items-center mb-2">
-      <div className="text-gray-600 text-2xl mr-3">{icon}</div>
-      <h2 className="text-lg font-semibold text-blue-900">{title}</h2>
+      <div className="text-white text-2xl mr-3">{icon}</div>
+      <h2 className="text-lg font-semibold text-white">{title}</h2>
     </div>
     <hr className="border-gray-300 mb-4" />
-    <div className="text-blue-500 font-bold text-2xl">{value !== null ? value : 'Loading...'}</div>
+    <div className="text-white font-bold text-2xl">{value !== null ? value : 'Loading...'}</div>
   </div>
 );
 
+
 const OrdersTable = ({ recentOrders, isLoading }) => (
-  <div className="flex flex-wrap mb-3">
+  <div className="flex flex-wrap mb-3 rounded-lg"
+  style={{
+    backgroundImage: `url(${eclipse})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+  }}>
     <div className="w-full p-2">
-      <div className="bg-white p-8 rounded-lg shadow-lg">
+      <div className=" p-8 rounded-lg shadow-lg">
         <div className="flex items-center mb-6">
-          <FaShoppingCart className="text-3xl text-gray-600 mr-2" />
-          <h3 className="text-xl font-bold text-gray-800">Recent Orders</h3>
+          <FaShoppingCart className="text-3xl text-white mr-2" />
+          <h3 className="text-xl font-bold text-white">Recent Orders</h3>
         </div>
         {isLoading ? (
           <div className="text-center text-gray-500">Loading...</div>
@@ -210,21 +210,21 @@ const OrdersTable = ({ recentOrders, isLoading }) => (
                 order.items.slice(-3).map((item, index) => (
                   <div
                     key={index}
-                    className="bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg p-1 shadow-md transition-transform transform hover:scale-105"
+                    className="bg-gradient-to-r border rounded-lg bg-transparent p-1 shadow-md transition-transform transform hover:scale-105"
                   >
-                    <div className="flex justify-between mb-4">
-                      <div className="text-sm text-blue-700">
-                        <FiBox className="inline text-blue-500 mr-1" />
-                        Order ID: <span className="font-medium text-blue-900">{order._id}</span>
+                    <div className="flex justify-between mb-1">
+                      <div className="text-sm text-white">
+                        <FiBox className="inline text-white mr-1" />
+                        Order ID: <span className="font-medium text-white">{order._id}</span>
                       </div>
-                      <div className="text-sm text-blue-700">
+                      <div className="text-sm text-white">
                         {/* <MdAttachMoney className="inline text-blue-500 mr-1" /> */}
-                        Price: <span className="font-medium text-blue-900">{item.price !== undefined ? `MAD ${item.price}` : 'N/A'}</span>
+                        Price: <span className="font-medium text-white">{item.price !== undefined ? `MAD ${item.price}` : 'N/A'}</span>
                       </div>
                     </div>
-                    <div className="text-lg font-bold text-blue-800 mb-2">{item.name}</div>
-                    <div className="text-sm text-blue-700">
-                      Quantity: <span className="font-medium text-blue-900">{item.quantity}</span>
+                    <div className="text-lg font-bold text-white mb-2">{item.name}</div>
+                    <div className="text-sm text-white">
+                      Quantity: <span className="font-medium text-white">{item.quantity}</span>
                     </div>
                   </div>
                 ))
