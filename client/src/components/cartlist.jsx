@@ -253,7 +253,7 @@ const CartList = () => {
                             <div className="relative mb-4 h-60 w-60">
                                 <img src={hippoEmptyCart} alt="empty shopping cart hippo" className="w-full h-full object-contain" />
                             </div>
-                            <Link to="/products" className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md transition duration-200 ease-in-out">
+                            <Link to="/search" className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md transition duration-200 ease-in-out">
                                 Add items to your cart to checkout
                             </Link>
                         </div>

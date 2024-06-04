@@ -55,9 +55,9 @@ export default function Header() {
           <Link to='/'>
             <li className='hidden sm:inline text-purple-700 hover:underline'>Home</li>
           </Link>
-          <Link to='/about'>
+          {/* <Link to='/about'>
             <li className='hidden sm:inline text-purple-700 hover:underline'>About</li>
-          </Link>
+          </Link> */}
           
           <Link to={currentUser?.role === 'coop' ? '/sellerdashboard' : '/profile'} className="mr-4">
             {currentUser ? (

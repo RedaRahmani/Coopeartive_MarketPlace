@@ -10,6 +10,7 @@ import { BsBoxSeamFill } from "react-icons/bs";
 import { LuClipboardList } from "react-icons/lu";
 import { updateUserStart, updateUserFailure, updateUserSuccess, deleteUserFailure, deleteUserSuccess, signOutUserStart } from '../redux/user/userSlice';
 import { IoSettingsOutline } from "react-icons/io5";
+import { TiHomeOutline } from "react-icons/ti";
 import {Link} from 'react-router-dom'
 import { useDispatch } from 'react-redux';
 import { FiLogOut } from 'react-icons/fi';
@@ -43,25 +44,29 @@ export function LeftMenu  () {
       Seller Dashboard
     </Link>
     <nav className="flex flex-col h-full">
-      <Link to="/profile" className="flex items-center mb-4 p-2 rounded hover:bg-gray-700 transition-colors">
+    <Link to="/" className="flex items-center mb-4 p-2 rounded hover:bg-gray-300 hover:text-black transition-colors">
+        <TiHomeOutline className="mr-3 h-6 w-6" />
+        <span className="text-lg">Home</span>
+      </Link>
+      <Link to="/profile" className="flex items-center mb-4 p-2 rounded hover:bg-gray-300 hover:text-black transition-colors">
         <VscAccount className="mr-3 h-6 w-6" />
         <span className="text-lg">Account</span>
       </Link>
-      <Link to="/Product" className="flex items-center mb-4 p-2 rounded hover:bg-gray-700 transition-colors">
+      <Link to="/Product" className="flex items-center mb-4 p-2 rounded hover:bg-gray-300 hover:text-black transition-colors">
         <BsBoxSeamFill className="mr-3 h-6 w-6" />
         <span className="text-lg">Products</span>
       </Link>
-      <Link to="/orders" className="flex items-center mb-4 p-2 rounded hover:bg-gray-700 transition-colors">
+      <Link to="/orders" className="flex items-center mb-4 p-2 rounded hover:bg-gray-300 hover:text-black transition-colors">
         <LuClipboardList className="mr-3 h-6 w-6" />
         <span className="text-lg">My Orders</span>
       </Link>
 
-      <Link to="/Contact" className="flex items-center mb-4 p-2 rounded hover:bg-gray-700 transition-colors">
+      <Link to="/Contact" className="flex items-center mb-4 p-2 rounded hover:bg-gray-300 hover:text-black transition-colors">
         <MdOutlineContactSupport className="mr-3 h-6 w-6" />
         <span className="text-lg">Support</span>
       </Link>
       <div className="flex-grow"></div> {/* This div will take up the remaining space */}
-      <Link to="/sign-in" onClick={handleSignOut} className="flex items-center mb-10 p-2 rounded hover:bg-gray-700 transition-colors">
+      <Link to="/sign-in" onClick={handleSignOut} className="flex items-center mb-10 p-2 rounded hover:bg-gray-300 hover:text-black transition-colors">
       <FiLogOut className="mr-3 h-6 w-6" />
         <span className="text-lg">Sign out</span>
       </Link>
