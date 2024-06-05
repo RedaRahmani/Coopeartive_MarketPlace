@@ -16,6 +16,7 @@ import Listing from './pages/Listing';
 import Search from './pages/Search';
 import { useEffect } from 'react';
 import Thankyou from './pages/Thankyou';
+import Footer from './components/Footer';
 
 export default function App() {
   useEffect(() => {
@@ -62,7 +63,9 @@ export default function App() {
         <Route path='/create-listing' element={<CreateListing />} />
         <Route path='/update-listing/:listingId' element={<UpdateListing />} />
       </Route>
+      
     </Routes>
+    
     </BrowserRouter>
   )
 }

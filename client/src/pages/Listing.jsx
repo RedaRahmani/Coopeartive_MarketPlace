@@ -14,6 +14,7 @@ import 'swiper/css/bundle';
 import { FaShare } from 'react-icons/fa';
 import Contact from '../components/Contact';
 import ReviewList from '../components/ReviewList.jsx';
+import Footer from '../components/Footer.jsx'
 
 SwiperCore.use([Navigation]);
 
@@ -220,7 +221,7 @@ export default function Listing() {
                     <ReviewForm />
 
                   </div>
-                  {currentUser.role === 'client' && (
+                  {/* {currentUser.role === 'client' && (
                     <button
                       onClick={() => setContact(true)}
                       className="bg-gray-700 text-white rounded-lg uppercase hover:opacity-95 py-2 px-4 mt-4"
@@ -228,13 +229,14 @@ export default function Listing() {
                       Contact landlord
                     </button>
                   )}
-                  {contact && <Contact listing={listing} />}
+                  {contact && <Contact listing={listing} />} */}
                 </div>
               </div>
             </div>
           )}
         </div>
       </main>
+      <Footer />
     </>
   );
 }

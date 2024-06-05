@@ -8,6 +8,7 @@ import { LeftMenu } from '../components/Userinfo';
 import Avatar from '../components/Avatar';
 import ImageFrame from '../components/imagefarme';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 const Profile = () => {
   const fileRef = useRef(null);
@@ -274,6 +275,7 @@ return (
   </div>
 </div>
 
+
       </>
     )}
     
@@ -422,6 +424,7 @@ return (
     </form>
   </div>
 </div>
+<Footer/>
 
       </>
     )}
